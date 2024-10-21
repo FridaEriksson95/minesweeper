@@ -1,2 +1,21 @@
 public class Board {
+
+    //spelbrädan
+
+    int size;
+    int amountBombs;
+
+    Cell[][] minesweeper;
+
+    public void printBoard() {
+    }
+
+    public void isOccupied() {
+    }
+
+    public void generateBombs() {
+    }
+
+    public void checkWin() {
+    }
 }
