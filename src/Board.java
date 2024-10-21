@@ -1,6 +1,7 @@
 public class Board {
 
-    //spelbrädan
+    //spelbrädann
+    //spelbrädannigen
 
     int size;
     int amountBombs;
