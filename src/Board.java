@@ -52,7 +52,30 @@ public class Board {
     }
 
     public void checkWin() {
+
+        boolean hasWon = true;
+
+//        Goes through cells
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+//                Reference
+                Cell cell = minesweeper[i][j];
+
+//                Checks if cell is NOT bomb and not open/tapped
+                if (!cell.isBomb() && !cell.isOpen()) {
+                    hasWon = false;
+                    break;
+                }
+            }
+        }
+
+        if (hasWon) {
+            System.out.println("Congratulations! You won!");
+        } else {
+            System.out.println("You lost!");
+        }
     }
+
     public void generateBoard () {
         for (int i = 0 ; i < minesweeper.length; i ++) {
             for (int j = 0 ; j < minesweeper.length; j++){
