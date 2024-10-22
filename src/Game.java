@@ -4,6 +4,7 @@ public class Game {
     private Board board;
     private final Scanner scanner;
 
+
     public Game() {
         this.scanner = new Scanner(System.in);
     }
@@ -39,14 +40,14 @@ public class Game {
         while (size < 1 || size > 20) {
             System.out.println("Choose boardsize (1-20): ");
             size = scanner.nextInt();
-            if (size < 1 || size > 20){
+            if (size < 1 || size > 20) {
                 System.out.println("Invalid input. Choose a size between 1-20.");
             }
         }
         System.out.println("Choose amount of mines: ");
         int bombs = scanner.nextInt();
         board = new Board(size, bombs);
-        playGame();
+
     }
     /*public void instructions() {
         System.out.println("Gameinstructions:");
@@ -58,14 +59,43 @@ public class Game {
     }*/
 
     public void playGame() {
+        menu();
+        while (!board.checkWin() && playerMove()) {
+            board.printBoard();
+        }
 
+
+        if (board.checkWin()) {
+            System.out.println("Congratulations, you won!");
+        } else {
+            for (int i = 0; i < board.size; i++) {
+                for (int j = 0; j < board.size; j++) {
+                    board.getMinesweeper()[i][j].setOpen(true);
+
+                }
+            }
+            board.printBoard();
+            System.out.println("You hit a bomb, game over!");
+
+        }
+        System.out.println("Do you wish to play again? y/n");
+        String input = scanner.next();
+
+        if (input.equals("y")) {
+            playGame();
+        } else {
+            System.out.println("Thank you for playing!");
+            System.exit(0);
+        }
     }
 
     public void resetGame() {
+
     }
 
     /**
      * Asks the user to enter an x- and y-position.
+     *
      * @return Returns true when move is made and false if a bomb is hit.
      */
     public boolean playerMove() {
@@ -75,7 +105,7 @@ public class Game {
             int y;
             while (true) {
                 while (true) {
-                    System.out.println("Enter x-position:");
+                    System.out.println("Enter a row:");
                     if (scanner.hasNextInt()) {
                         x = scanner.nextInt();
                         break;
@@ -84,7 +114,7 @@ public class Game {
                     }
                 }
                 while (true) {
-                    System.out.println("Enter y-position:");
+                    System.out.println("Enter a column:");
                     if (scanner.hasNextInt()) {
                         y = scanner.nextInt();
                         break;
@@ -95,7 +125,7 @@ public class Game {
                 x--;
                 y--;
                 if (withinBoundsOfGrid(x, y)) {
-                    position = board.getMinesweeper()[x][y];
+                    position = board.getMinesweeper()[y][x];
                     break;
 
                 } else {
@@ -105,12 +135,13 @@ public class Game {
             if (position.isOpen()) {
                 System.out.println("That cell is already open, try again.");
             } else {
+                board.getMinesweeper()[y][x].setOpen(true);
                 if (position.isBomb()) {
-                    System.out.println("You hit a bomb, game over!");
+
+
                     return false;
                 } else {
-                    board.getMinesweeper()[x][y].setOpen(true);
-                    System.out.println("You opened x: " + x + " y: " + y + ".");
+                    System.out.println("You opened Column: " + x + " Row: " + y + ".");
                     return true;
                 }
             }
@@ -119,12 +150,13 @@ public class Game {
 
     /**
      * Checks if a position exists on the board.
+     *
      * @param x x-coordinate
      * @param y y-coordinate
      * @return Returns true if position is within bounds.
      */
     public boolean withinBoundsOfGrid(int x, int y) {
-        return (x > 0 && x < board.size) && (y > 0 && y < board.size);
+        return (x >= 0 && x < board.size) && (y >= 0 && y < board.size);
     }
 
     public void gameOver() {

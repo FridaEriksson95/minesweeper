@@ -20,33 +20,33 @@ public class Board {
         this.amountBombs = amountBombs;
 //  Create board
         this.minesweeper = new Cell[size][size];
+        generateBoard();
         generateBombs();
         printBoard();
     }
 
     public void printBoard() {
-        generateBoard();
-        System.out.print("   ");
+        System.out.print("    ");
         for (int i = 1; i <= minesweeper.length; i++) {
-            System.out.print(i + " ");
+            System.out.print(String.format("%-2d ", i));
         }
-        for (int i = 1; i <= minesweeper.length; i++) {
+        for (int i = 0; i < minesweeper.length; i++) {
             System.out.println();
             if (i < 10 ) {
-                System.out.print(i + "  ");
-            }else {
-                System.out.print(i + " ");
+                System.out.print(String.format("%-2d ", i + 1));
+            } else {
+                System.out.print(i + 1 + "");
             }
             for (int j = 0 ; j < minesweeper.length; j++) {
                 // Show * for bombs, O for open cell and _ for hidden
                 if (minesweeper[i][j].isOpen()) {
                     if (minesweeper[i][j].isBomb()) {
-                        System.out.print("* ");
+                        System.out.print(" * ");
                     } else {
-                        System.out.print("O ");
+                        System.out.print(" O ");
                     }
                 } else {
-                    System.out.print("_ ");
+                    System.out.print(" _ "); //
                 }
             }
             System.out.println();
@@ -84,8 +84,6 @@ public class Board {
 
     public boolean checkWin() {
 
-        boolean hasWon = true;
-
 //        Goes through cells
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
@@ -99,7 +97,6 @@ public class Board {
             }
         }
 
-        System.out.println("Congratulations you beat the game");
         return true;
     }
 
