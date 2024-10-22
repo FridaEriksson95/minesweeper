@@ -9,19 +9,16 @@ public class Board {
     /**
      * Ta bort 10/10
      */
-    Cell[][] minesweeper;
+ private   Cell[][] minesweeper;
 
     //    Constructor
     public Board(int size, int amountBombs) {
-
         this.size = size;
         this.amountBombs = amountBombs;
 //  Create board
         this.minesweeper = new Cell[size][size];
         generateBombs();
         printBoard();
-
-
     }
 
     public void printBoard() {
@@ -67,5 +64,9 @@ public class Board {
                 minesweeper[i][j] = new Cell();
             }
         }
+    }
+
+    public Cell[][] getMinesweeper() {
+        return minesweeper;
     }
 }
