@@ -52,20 +52,34 @@ public class Board {
     public void generateBombs() {}
 
 
-    /**
-     * Checks if all fields that are not bombs have been opened.
-     * @return Returns true if player has won.
-     */
-    public boolean checkWin() {
-        for (Cell[] cellArray : minesweeper) {
-            for (Cell cell : cellArray) {
-                if (!cell.isOpen() && !cell.isBomb()) {
-                    return false;
+
+   
+    public void checkWin() {
+
+        boolean hasWon = true;
+
+//        Goes through cells
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+//                Reference
+                Cell cell = minesweeper[i][j];
+
+//                Checks if cell is NOT bomb and not open/tapped
+                if (!cell.isBomb() && !cell.isOpen()) {
+                    hasWon = false;
+                    break;
                 }
             }
         }
-        return true;
+
+        if (hasWon) {
+            System.out.println("Congratulations! You won!");
+        } else {
+            System.out.println("You lost!");
+        }
+
     }
+
     public void generateBoard () {
         for (int i = 0 ; i < minesweeper.length; i ++) {
             for (int j = 0 ; j < minesweeper.length; j++){

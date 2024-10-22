@@ -12,8 +12,8 @@ public class Game {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Låt oss röja lite minor i detta Minesweeper spel!");
         System.out.println("1. Starta nytt spel");
-        System.out.println("2. Spelinstruktioner.");
-        System.out.println("3. Avluta");
+        //System.out.println("2. Spelinstruktioner.");
+        System.out.println("2. Avluta");
         System.out.println("Ditt val: ");
         int choice = scanner.nextInt();
 
@@ -34,9 +34,15 @@ public class Game {
     }
 
     public void startGame() {
+        int size = 0;
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Välj brädstorlek: ");
-        int size = scanner.nextInt();
+        while (size < 1 || size > 20) {
+            System.out.println("Välj brädstorlek (1-20): ");
+            size = scanner.nextInt();
+            if (size < 1 || size > 20){
+                System.out.println("Ogiltigt val. Ange storlek mellan 1-20.");
+            }
+        }
         System.out.println("Välj antal minor: ");
         int bombs = scanner.nextInt();
         board = new Board(size, bombs);
@@ -52,6 +58,7 @@ public class Game {
     }*/
 
     public void playGame() {
+
     }
 
     public void resetGame() {
