@@ -4,5 +4,3 @@ public class Main {
         game.menu();
     }
 }
-
-//Fridas kommentar är bäst

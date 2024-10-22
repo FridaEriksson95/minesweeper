@@ -10,11 +10,11 @@ public class Game {
 
     public void menu() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Låt oss röja lite minor i detta Minesweeper spel!");
-        System.out.println("1. Starta nytt spel");
-        //System.out.println("2. Spelinstruktioner.");
-        System.out.println("2. Avluta");
-        System.out.println("Ditt val: ");
+        System.out.println("Let's clear some mines in this Minesweeper game!");
+        System.out.println("1. Start new game");
+        //System.out.println("2. Gameinstructions.");
+        System.out.println("2. Exit");
+        System.out.println("Your choice: ");
         int choice = scanner.nextInt();
 
         switch (choice) {
@@ -25,10 +25,10 @@ public class Game {
                 instructions();
                 break;*/
             case 2:
-                System.out.println("Tack för spelstunden, avslutar...");
+                System.out.println("Thanks for playing, exiting...");
                 break;
             default:
-                System.out.println("Ogiltigt val, försök igen!");
+                System.out.println("Invalid choice, try again!");
                 menu();
         }
     }
@@ -37,23 +37,23 @@ public class Game {
         int size = 0;
         Scanner scanner = new Scanner(System.in);
         while (size < 1 || size > 20) {
-            System.out.println("Välj brädstorlek (1-20): ");
+            System.out.println("Choose boardsize (1-20): ");
             size = scanner.nextInt();
             if (size < 1 || size > 20){
-                System.out.println("Ogiltigt val. Ange storlek mellan 1-20.");
+                System.out.println("Invalid input. Choose a size between 1-20.");
             }
         }
-        System.out.println("Välj antal minor: ");
+        System.out.println("Choose amount of mines: ");
         int bombs = scanner.nextInt();
         board = new Board(size, bombs);
         playGame();
     }
     /*public void instructions() {
-        System.out.println("Spelinstruktioner:");
-        System.out.println("Målet med spelet är att öppna alla rutor utan att träffa en mina.");
-        System.out.println("Välj en rad och kolumn för att placera ditt drag.");
-        System.out.println("Om du hamnar på en mina förlorar du spelet.");
-        System.out.println("Öppnar du alla rutor utom minorna så vinner du spelet!\n");
+        System.out.println("Gameinstructions:");
+        System.out.println("The goal of the game is to open all of the cells without hitting a mine.");
+        System.out.println("Pick a row and a coloumn to place your move.");
+        System.out.println("If your move hits a mine, you loose.");
+        System.out.println("If you manage to open all the cells without hitting a mine, you win!\n");
         menu();
     }*/
 
