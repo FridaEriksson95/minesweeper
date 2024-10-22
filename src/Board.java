@@ -9,7 +9,20 @@ public class Board {
     /**
      * Ta bort 10/10
      */
-    Cell[][] minesweeper = new Cell[10][10];
+    Cell[][] minesweeper;
+
+//    Constructor
+    public Board(int size, int amountBombs) {
+
+        this.size = size;
+        this.amountBombs = amountBombs;
+//  Create board
+        this.minesweeper = new Cell[size][size];
+        generateBombs();
+        printBoard();
+
+
+    }
 
     public void printBoard() {
         System.out.print("   ");
@@ -29,10 +42,13 @@ public class Board {
         }
     }
 
-    public void isOccupied() {
-    }
+//    public void isOccupied() {
+//    }
 
     public void generateBombs() {
+
+
+
     }
 
     public void checkWin() {
