@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class Board {
 
     //spelbrädan
@@ -36,24 +38,50 @@ public class Board {
                 System.out.print(i + " ");
             }
             for (int j = 0 ; j < minesweeper.length; j++) {
-                if (minesweeper[i - 1][j].isOpen()) {
-                    System.out.print("0 ");
-                }
-                else {
+                // Show * for bombs, O for open cell and _ for hidden
+                if (minesweeper[i][j].isOpen()) {
+                    if (minesweeper[i][j].isBomb()) {
+                        System.out.print("* ");
+                    } else {
+                        System.out.print("O ");
+                    }
+                } else {
                     System.out.print("_ ");
                 }
+            }
+            System.out.println();
+        }
+    }
+
+
+    public void generateBombs() {
+        Random random = new Random();
+        int bombsPlaced = 0;
+
+        // Loop until the required number of bombs is placed
+        while (bombsPlaced < amountBombs) {
+            int row = random.nextInt(size);
+            int col = random.nextInt(size);
+
+            // Check if the selected cell is not already occupied by a bomb
+            if (!minesweeper[row][col].isBomb()) {
+                minesweeper[row][col].setBomb(true); // Sätt bomben med settern
+                bombsPlaced++;
             }
         }
     }
 
+
+
 //    public void isOccupied() {
 //    }
 
-    public void generateBombs() {}
+    
 
 
 
    
+
     public void checkWin() {
 
         boolean hasWon = true;
