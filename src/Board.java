@@ -82,7 +82,7 @@ public class Board {
 
    
 
-    public void checkWin() {
+    public boolean checkWin() {
 
         boolean hasWon = true;
 
@@ -94,18 +94,13 @@ public class Board {
 
 //                Checks if cell is NOT bomb and not open/tapped
                 if (!cell.isBomb() && !cell.isOpen()) {
-                    hasWon = false;
-                    break;
+                   return false;
                 }
             }
         }
 
-        if (hasWon) {
-            System.out.println("Congratulations! You won!");
-        } else {
-            System.out.println("You lost!");
-        }
-
+        System.out.println("Congratulations you beat the game");
+        return true;
     }
 
     public void generateBoard () {
