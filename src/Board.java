@@ -11,8 +11,9 @@ public class Board {
      */
  private   Cell[][] minesweeper;
 
-    //    Constructor
+//    Constructor
     public Board(int size, int amountBombs) {
+
         this.size = size;
         this.amountBombs = amountBombs;
 //  Create board
@@ -22,19 +23,25 @@ public class Board {
     }
 
     public void printBoard() {
+        generateBoard();
         System.out.print("   ");
         for (int i = 1; i <= minesweeper.length; i++) {
             System.out.print(i + " ");
         }
         for (int i = 1; i <= minesweeper.length; i++) {
             System.out.println();
-            if (i < 10) {
+            if (i < 10 ) {
                 System.out.print(i + "  ");
-            } else {
+            }else {
                 System.out.print(i + " ");
             }
-            for (int j = 0; j < minesweeper.length; j++) {
-                System.out.print("_" + " ");
+            for (int j = 0 ; j < minesweeper.length; j++) {
+                if (minesweeper[i - 1][j].isOpen()) {
+                    System.out.print("0 ");
+                }
+                else {
+                    System.out.print("_ ");
+                }
             }
         }
     }
@@ -42,10 +49,9 @@ public class Board {
 //    public void isOccupied() {
 //    }
 
-    public void generateBombs() {
+    public void generateBombs() {}
 
 
-    }
 
     public boolean checkWin() {
         for (Cell[] cellArray : minesweeper) {
@@ -57,10 +63,9 @@ public class Board {
         }
         return true;
     }
-
-    public void generateBoard() {
-        for (int i = 0; i < minesweeper.length; i++) {
-            for (int j = 0; j < minesweeper.length; j++) {
+    public void generateBoard () {
+        for (int i = 0 ; i < minesweeper.length; i ++) {
+            for (int j = 0 ; j < minesweeper.length; j++){
                 minesweeper[i][j] = new Cell();
             }
         }
