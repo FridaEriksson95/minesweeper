@@ -57,6 +57,10 @@ public class Game {
     public void resetGame() {
     }
 
+    /**
+     * Asks the user to enter an x- and y-position.
+     * @return Returns true when move is made and false if a bomb is hit.
+     */
     public boolean playerMove() {
         Cell position;
         while (true) {
@@ -106,6 +110,12 @@ public class Game {
         }
     }
 
+    /**
+     * Checks if a position exists on the board.
+     * @param x x-coordinate
+     * @param y y-coordinate
+     * @return Returns true if position is within bounds.
+     */
     public boolean withinBoundsOfGrid(int x, int y) {
         return (x > 0 && x < board.size) && (y > 0 && y < board.size);
     }

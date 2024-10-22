@@ -52,7 +52,10 @@ public class Board {
     public void generateBombs() {}
 
 
-
+    /**
+     * Checks if all fields that are not bombs have been opened.
+     * @return Returns true if player has won.
+     */
     public boolean checkWin() {
         for (Cell[] cellArray : minesweeper) {
             for (Cell cell : cellArray) {
