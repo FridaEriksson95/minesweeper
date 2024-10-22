@@ -25,6 +25,7 @@ public class Board {
     }
 
     public void printBoard() {
+        generateBoard();
         System.out.print("   ");
         for (int i = 1; i <= minesweeper.length; i++) {
             System.out.print(i + " ");
@@ -37,7 +38,12 @@ public class Board {
                 System.out.print(i + " ");
             }
             for (int j = 0 ; j < minesweeper.length; j++) {
-                System.out.print("_" + " ");
+                if (minesweeper[i - 1][j].isOpen()) {
+                    System.out.print("0 ");
+                }
+                else {
+                    System.out.print("_ ");
+                }
             }
         }
     }
