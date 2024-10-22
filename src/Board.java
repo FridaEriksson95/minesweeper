@@ -20,8 +20,6 @@ public class Board {
         this.minesweeper = new Cell[size][size];
         generateBombs();
         printBoard();
-
-
     }
 
     public void printBoard() {
