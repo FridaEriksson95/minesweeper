@@ -11,7 +11,7 @@ public class Board {
     /**
      * Ta bort 10/10
      */
-    Cell[][] minesweeper;
+ private   Cell[][] minesweeper;
 
 //    Constructor
     public Board(int size, int amountBombs) {
@@ -53,6 +53,7 @@ public class Board {
         }
     }
 
+
     public void generateBombs() {
         Random random = new Random();
         int bombsPlaced = 0;
@@ -70,6 +71,16 @@ public class Board {
         }
     }
 
+
+
+//    public void isOccupied() {
+//    }
+
+    
+
+
+
+   
 
     public void checkWin() {
 
@@ -94,6 +105,7 @@ public class Board {
         } else {
             System.out.println("You lost!");
         }
+
     }
 
     public void generateBoard () {
@@ -102,5 +114,9 @@ public class Board {
                 minesweeper[i][j] = new Cell();
             }
         }
+    }
+
+    public Cell[][] getMinesweeper() {
+        return minesweeper;
     }
 }
