@@ -11,7 +11,7 @@ public class Board {
      */
     Cell[][] minesweeper;
 
-//    Constructor
+    //    Constructor
     public Board(int size, int amountBombs) {
 
         this.size = size;
@@ -31,12 +31,12 @@ public class Board {
         }
         for (int i = 1; i <= minesweeper.length; i++) {
             System.out.println();
-            if (i < 10 ) {
+            if (i < 10) {
                 System.out.print(i + "  ");
-            }else {
+            } else {
                 System.out.print(i + " ");
             }
-            for (int j = 0 ; j < minesweeper.length; j++) {
+            for (int j = 0; j < minesweeper.length; j++) {
                 System.out.print("_" + " ");
             }
         }
@@ -48,14 +48,22 @@ public class Board {
     public void generateBombs() {
 
 
-
     }
 
-    public void checkWin() {
+    public boolean checkWin() {
+        for (Cell[] cellArray : minesweeper) {
+            for (Cell cell : cellArray) {
+                if (!cell.isOpen() && !cell.isBomb()) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
-    public void generateBoard () {
-        for (int i = 0 ; i < minesweeper.length; i ++) {
-            for (int j = 0 ; j < minesweeper.length; j++){
+
+    public void generateBoard() {
+        for (int i = 0; i < minesweeper.length; i++) {
+            for (int j = 0; j < minesweeper.length; j++) {
                 minesweeper[i][j] = new Cell();
             }
         }
