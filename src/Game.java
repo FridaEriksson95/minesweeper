@@ -168,7 +168,7 @@ public class Game {
                 System.out.println("Invalid input. Please enter yes or no.");
                 continue;
             }
-            
+
 
             if (position.isOpen()) {
                 System.out.println("That cell is already open, try again.");
