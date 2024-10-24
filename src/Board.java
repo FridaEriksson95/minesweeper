@@ -166,6 +166,14 @@ public class Board {
         return (x >= 0 && x < size) && (y >= 0 && y < size);
     }
 
+    //    Methods that checks cells to open nearby
+    public void openCellNearBy() {
+//        By default, no cells have been opened.
+        int cellsOpened = 0;
+//        Create a variable that sets a 'max' of able to open cells, otherwise all cells open.
+        int limitCellsToOpen = 3;
+    }
+
 
     public Cell[][] getMinesweeper() {
         return minesweeper;

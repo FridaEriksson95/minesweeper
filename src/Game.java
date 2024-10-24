@@ -160,14 +160,6 @@ public class Game {
         return (x >= 0 && x < board.size) && (y >= 0 && y < board.size);
     }
 
-    //    Methods that checks cells to open nearby
-    public void openCellNearBy() {
-//        By default, no cells have been opened.
-        int cellsOpened = 0;
-//        Create a variable that sets a 'max' of able to open cells, otherwise all cells open.
-        int limitCellsToOpen = 3;
-    }
-
 
     public void gameOver() {
     }
