@@ -142,6 +142,11 @@ public class Game {
                     return false;
                 } else {
                     System.out.println("You opened Column: " + x + " Row: " + y + ".");
+
+                    if (position.getNumber() == 0) {
+                            board.openCellNearBy(y, x);
+                    }
+
                     return true;
                 }
             }
