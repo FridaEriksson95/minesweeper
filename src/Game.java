@@ -1,8 +1,13 @@
+import jdk.jshell.EvalException;
+
 import java.util.Scanner;
 
 public class Game {
     private Board board;
     private final Scanner scanner;
+    private Player playerOne;
+    private Player playerTwo;
+    private Player currentPlayer;
 
 
     public Game() {
@@ -15,6 +20,7 @@ public class Game {
         System.out.println("1. Start new game");
         //System.out.println("2. Gameinstructions.");
         System.out.println("2. Exit");
+        System.out.println("3. Two-player mode");
         System.out.println("Your choice: ");
         int choice = scanner.nextInt();
 
@@ -27,6 +33,9 @@ public class Game {
                 break;*/
             case 2:
                 System.out.println("Thanks for playing, exiting...");
+                break;
+            case 3:
+                twoPlayerInit();
                 break;
             default:
                 System.out.println("Invalid choice, try again!");
@@ -162,4 +171,93 @@ public class Game {
     public void gameOver() {
     }
 
+
+    /**
+     * Method to Create player one and two.
+     */
+    public void twoPlayerInit() {
+        System.out.println("Player: 1 enter name");
+        String playerOneName = getNextString();
+        playerOne = new Player(playerOneName, 1);
+        System.out.println("Player: 2 enter name ");
+        String playerTwoName  = getNextString();
+        playerTwo = new Player(playerTwoName, 2);
+
+        startGameTp();
+    }
+
+    /**
+     * Method to handle input
+     * @return a String
+     */
+    public String getNextString(){
+        while(true) {
+            boolean isValid = true;
+            if (scanner.hasNext()) {
+                String string = scanner.next();
+
+                for (int i = 0 ; i < string.length(); i++) {
+                    if (!Character.isLetter(string.charAt(i))){
+                        isValid = false;
+                        System.out.println("Not a valid name, please use only letters.");
+                        break;
+                    }
+                }
+                if (isValid) {
+                    return string;
+            }
+
+            }
+        }
+    }
+
+    /**
+     * Method to start the twoPlayerMode
+     */
+
+    public void startGameTp() {
+        int size = 0;
+        Scanner scanner = new Scanner(System.in);
+        while (size < 1 || size > 20) {
+            System.out.println("Choose boardsize (1-20): ");
+            size = scanner.nextInt();
+            if (size < 1 || size > 20) {
+                System.out.println("Invalid input. Choose a size between 1-20.");
+            }
+        }
+        System.out.println("Choose amount of mines: ");
+        int bombs = scanner.nextInt();
+        board = new Board(size, bombs);
+        currentPlayer = playerOne;
+        playGameTp();
+    }
+
+    public void playGameTp() {
+        while (!board.checkWin()) {
+            board.printBoard();
+            System.out.println(currentPlayer.getName() + "'s turn!");
+
+            if (!playerMove()) {
+                for (int i = 0 ; i < board.size; i++) {
+                    for (int j = 0 ; j < board.size; j++) {
+                        board.getMinesweeper()[i][j].setOpen(true);
+                    }
+                }
+                board.printBoard();
+                System.out.println(currentPlayer.getName() + " hit a bomb! ");
+                currentPlayer.setLoseCount(currentPlayer.getLoseCount()+ 1);
+                break;
+            }
+
+            if (board.checkWin()) {
+                System.out.println(currentPlayer.getName() + " Has won!");
+                currentPlayer.setWinCount(currentPlayer.getWinCount() + 1);
+                break;
+            }
+            currentPlayer.points++;
+
+            currentPlayer = (currentPlayer == playerOne) ? playerTwo : playerOne;
+        }
+
+    }
 }
