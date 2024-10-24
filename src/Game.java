@@ -233,6 +233,19 @@ public class Game {
     }
 
     public void playGameTp() {
+        for (int i = 0 ; i < board.size; i++) {
+            for (int j = 0 ; j < board.size; j++) {
+              if (currentPlayer == playerOne) {
+                 if (board.getMinesweeper()[i][j].isOpen()) {
+                     System.out.print(" P1 ");
+                 }
+                  }else {
+                  if(board.getMinesweeper()[i][j].isOpen()) {
+                      System.out.print(" P2 ");
+                  }
+              }
+            }
+        }
         while (!board.checkWin()) {
             board.printBoard();
             System.out.println(currentPlayer.getName() + "'s turn!");
@@ -246,18 +259,39 @@ public class Game {
                 board.printBoard();
                 System.out.println(currentPlayer.getName() + " hit a bomb! ");
                 currentPlayer.setLoseCount(currentPlayer.getLoseCount()+ 1);
+                printStats();
                 break;
             }
 
             if (board.checkWin()) {
+                for (int i = 0 ; i < board.size; i ++) {
+                    for (int j = 0 ; i < board.size; j ++) {
+                        board.getMinesweeper()[i][j].setOpen(true);
+                    }
+                }
                 System.out.println(currentPlayer.getName() + " Has won!");
                 currentPlayer.setWinCount(currentPlayer.getWinCount() + 1);
+                printStats();
                 break;
             }
             currentPlayer.points++;
 
+
             currentPlayer = (currentPlayer == playerOne) ? playerTwo : playerOne;
         }
 
+    }
+    public void printStats () {
+        System.out.println(playerOne.getName() + "'s Stats");
+        System.out.print(" Wins: " + " " +playerOne.getWinCount());
+        System.out.print(" Losses: " + " " +playerOne.getLoseCount());
+        System.out.print(" Points: " + " " + playerOne.getPoints());
+        System.out.println();
+        System.out.println("-------------------");
+        System.out.println(playerTwo.getName() + "'s Stats");
+        System.out.print("Wins: " + " " + playerTwo.getWinCount());
+        System.out.print("Losses: " + " " + +playerTwo.getLoseCount());
+        System.out.print("Points: " + " " + playerTwo.getPoints());
+        System.out.println();
     }
 }
