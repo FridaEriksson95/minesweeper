@@ -167,18 +167,22 @@ public class Board {
     }
 
     //    Methods that checks cells to open nearby
-    public void openCellNearBy(int x, int y, int limitCellsToOpen) {
+    public void openCellNearBy(int x, int y) {
+        Random random = new Random();
+        int limitCellsToOpen = random.nextInt(4)+1;
 
 //        Check if coordinates are within bounds & if cell is open
         if (!withinBoundsOfGrid(x, y) || minesweeper[x][y].isOpen()) {
-
 //           Don't do anything if cell is open/out of bounds
             return;
         }
 
 //        Open cell
-        minesweeper[x][y].isOpen();
-        limitCellsToOpen--;
+        minesweeper[x][y].setOpen(true);
+
+        if (minesweeper[x][y].getNumber() == 0) {
+
+        }
 
 
     }
