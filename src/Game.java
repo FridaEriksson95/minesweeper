@@ -148,20 +148,27 @@ public class Game {
             System.out.println("Do you want to place a flag on this cell? yes/no:");
             String input = scanner.next();
             if (input.equalsIgnoreCase("yes")) {
-                if (!position.isOpen() && !position.isFlagged()) {
-                    position.setFlagged(true);
-                    System.out.println("Flag placed on Column: " + (x + 1) + " Row: " + (y + 1) + ".");
-                    continue;
-                } else if (position.isFlagged()) {
-                    System.out.println("This cell already contains a flag. Try again: ");
+                if (!position.isOpen()) {
+                    if (!position.isFlagged()) {
+                        position.setFlagged(true);
+                        System.out.println("Flag placed on Column: " + (x + 1) + " Row: " + (y + 1) + ".");
+                    } else {
+                        System.out.println("This cell already contains a flag. Try again.");
+                        board.printBoard();
+                        continue;
+                    }
+                    System.out.println("That cell is already open, try again.");
+                    board.printBoard();
                     continue;
                 }
+            } else if (input.equalsIgnoreCase("no")) {
+                System.out.println("No flag placed on Column: " + (x + 1) + " Row: " + (y + 1) + ".");
+                board.printBoard();
+            } else {
+                System.out.println("Invalid input. Please enter yes or no.");
+                continue;
             }
-         else if (input.equalsIgnoreCase("no")) {
-            System.out.println("No flag placed on Column: " + (x + 1) + " Row: " + (y + 1) + ".");
-        } else {
-            System.out.println("Invalid input. Please enter yes or no.");
-        }
+            
 
             if (position.isOpen()) {
                 System.out.println("That cell is already open, try again.");
