@@ -169,20 +169,35 @@ public class Board {
     //    Methods that checks cells to open nearby
     public void openCellNearBy(int x, int y) {
         Random random = new Random();
-        int limitCellsToOpen = random.nextInt(4)+1;
+        int limitCellsToOpen = random.nextInt(5);
 
-//        Check if coordinates are within bounds & if cell is open
-        if (!withinBoundsOfGrid(x, y) || minesweeper[x][y].isOpen()) {
-//           Don't do anything if cell is open/out of bounds
-            return;
+//        Check if coordinates are within bounds in board size & if cell is open, and no bomb
+        if (withinBoundsOfGrid(x, y) && !minesweeper[x][y].isOpen() && !minesweeper[x][y].isBomb()) {
+            //        Open cell if empty and no bomb nearby
+            minesweeper[x][y].setOpen(true);
+            limitCellsToOpen--;
+
+//            Checks if cell is empty and if there is more cells to open.
+            if (minesweeper[x][y].getNumber() == 0 && limitCellsToOpen > 0) {
+//                Get all surrounding cells
+                ArrayList<IntPair> surroundingOffsets = offSetsForSurroundingCells();
+
+//                Loop trough every surrounding cell
+                for (IntPair offset : surroundingOffsets) {
+                    int surroundingRow = offset.getX();
+                    int surroundingColumn = offset.getY();
+
+//                    Needs to check if new cell is within board size bounds && NOT opened
+                    if (limitCellsToOpen > 0 && withinBoundsOfGrid(surroundingRow, surroundingColumn) && !minesweeper[surroundingRow][surroundingColumn].isOpen()) {
+                        openCellNearBy(surroundingRow, surroundingColumn);
+                        limitCellsToOpen--;
+                    }
+                }
+
+            }
+
         }
 
-//        Open cell
-        minesweeper[x][y].setOpen(true);
-
-        if (minesweeper[x][y].getNumber() == 0) {
-
-        }
 
 
     }
