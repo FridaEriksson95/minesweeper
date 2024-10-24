@@ -148,6 +148,19 @@ public class Game {
         }
     }
 
+
+    /**
+     * Checks if a position exists on the board.
+     *
+     * @param x x-coordinate
+     * @param y y-coordinate
+     * @return Returns true if position is within bounds.
+     */
+    public boolean withinBoundsOfGrid(int x, int y) {
+        return (x >= 0 && x < board.size) && (y >= 0 && y < board.size);
+    }
+
+
     public void gameOver() {
     }
 
