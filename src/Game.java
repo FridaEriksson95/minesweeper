@@ -3,63 +3,16 @@ import java.util.Scanner;
 public class Game {
     private Board board;
     private final Scanner scanner;
+    private final Menu menu;
 
 
     public Game() {
         this.scanner = new Scanner(System.in);
+        this.menu = new Menu();
     }
-
-    public void menu() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Let's clear some mines in this Minesweeper game!");
-        System.out.println("1. Start new game");
-        //System.out.println("2. Gameinstructions.");
-        System.out.println("2. Exit");
-        System.out.println("Your choice: ");
-        int choice = scanner.nextInt();
-
-        switch (choice) {
-            case 1:
-                startGame();
-                break;
-           /* case 2:
-                instructions();
-                break;*/
-            case 2:
-                System.out.println("Thanks for playing, exiting...");
-                break;
-            default:
-                System.out.println("Invalid choice, try again!");
-                menu();
-        }
-    }
-
-    public void startGame() {
-        int size = 0;
-        Scanner scanner = new Scanner(System.in);
-        while (size < 1 || size > 20) {
-            System.out.println("Choose boardsize (1-20): ");
-            size = scanner.nextInt();
-            if (size < 1 || size > 20) {
-                System.out.println("Invalid input. Choose a size between 1-20.");
-            }
-        }
-        System.out.println("Choose amount of mines: ");
-        int bombs = scanner.nextInt();
-        board = new Board(size, bombs);
-
-    }
-    /*public void instructions() {
-        System.out.println("Gameinstructions:");
-        System.out.println("The goal of the game is to open all of the cells without hitting a mine.");
-        System.out.println("Pick a row and a coloumn to place your move.");
-        System.out.println("If your move hits a mine, you loose.");
-        System.out.println("If you manage to open all the cells without hitting a mine, you win!\n");
-        menu();
-    }*/
 
     public void playGame() {
-        menu();
+        menu.menu();
         while (!board.checkWin() && playerMove()) {
             board.printBoard();
         }
@@ -87,10 +40,6 @@ public class Game {
             System.out.println("Thank you for playing!");
             System.exit(0);
         }
-    }
-
-    public void resetGame() {
-
     }
 
     /**
@@ -158,8 +107,4 @@ public class Game {
     public boolean withinBoundsOfGrid(int x, int y) {
         return (x >= 0 && x < board.size) && (y >= 0 && y < board.size);
     }
-
-    public void gameOver() {
-    }
-
 }
