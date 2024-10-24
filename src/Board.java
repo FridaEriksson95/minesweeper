@@ -167,11 +167,20 @@ public class Board {
     }
 
     //    Methods that checks cells to open nearby
-    public void openCellNearBy() {
-//        By default, no cells have been opened.
-        int cellsOpened = 0;
-//        Create a variable that sets a 'max' of able to open cells, otherwise all cells open.
-        int limitCellsToOpen = 3;
+    public void openCellNearBy(int x, int y, int limitCellsToOpen) {
+
+//        Check if coordinates are within bounds & if cell is open
+        if (!withinBoundsOfGrid(x, y) || minesweeper[x][y].isOpen()) {
+
+//           Don't do anything if cell is open/out of bounds
+            return;
+        }
+
+//        Open cell
+        minesweeper[x][y].isOpen();
+        limitCellsToOpen--;
+
+
     }
 
 
