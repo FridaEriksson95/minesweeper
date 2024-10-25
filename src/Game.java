@@ -124,30 +124,13 @@ public class Game {
                 }
                 x--;
                 y--;
-
-                if (withinBoundsOfGrid(x, y)) {
-
                 if (board.withinBoundsOfGrid(x, y)) {
-
                     position = board.getMinesweeper()[y][x];
                     break;
-
                 } else {
                     System.out.println("The position you entered is not on the board.");
                 }
             }
-
-            /**
-             * Asks the user if they want to place a flag on the selected cell.
-             * If the cell is not open and not already flagged, a flag is placed on that cell.
-             * If a flag is successfully placed, a message is printed showing the coordinates.
-             * If a flag cannot be placed or if the cell is open or already contains a flag, an error message is shown.
-             * If the input is invalid an error message will also be shown, asking the user to make a valid input.
-             *
-             * @param x The x-coordinate (column) of the selected cell.
-             * @param y The y-coordinate (row) of the selected cell.
-             */
-
             System.out.println("Do you want to place a flag on this cell? yes/no:");
             String input = scanner.next();
             if (input.equalsIgnoreCase("yes")) {
@@ -155,63 +138,41 @@ public class Game {
                     if (!position.isFlagged()) {
                         position.setFlagged(true);
                         System.out.println("Flag placed on Column: " + (x + 1) + " Row: " + (y + 1) + ".");
+                        board.printBoard();
                     } else {
                         System.out.println("This cell already contains a flag. Try again.");
                         board.printBoard();
-                        continue;
+                     //   continue;
                     }
-                    System.out.println("That cell is already open, try again.");
-                    board.printBoard();
-                    continue;
+                   // continue;
                 }
             } else if (input.equalsIgnoreCase("no")) {
                 System.out.println("No flag placed on Column: " + (x + 1) + " Row: " + (y + 1) + ".");
+                if (position.isOpen()) {
+                    System.out.println("That cell is already open, try again.");
+                } else {
+                    board.getMinesweeper()[y][x].setOpen(true);
+                    if (position.isBomb()) {
+                        return false;
+                    } else {
+                        System.out.println("You opened Column: " + x + " Row: " + y + ".");
+
+                        if (position.getNumber() == 0) {
+                            board.openCellNearBy(y, x);
+                        }
+
+                        return true;
+                    }
+
+                }
                 board.printBoard();
             } else {
                 System.out.println("Invalid input. Please enter yes or no.");
-                continue;
+              //  continue;
             }
 
-
-            if (position.isOpen()) {
-                System.out.println("That cell is already open, try again.");
-            }
-            else {
-                board.getMinesweeper()[y][x].setOpen(true);
-                if (position.isBomb()) {
-
-
-                    return false;
-                } else {
-                    System.out.println("You opened Column: " + x + " Row: " + y + ".");
-
-                    if (position.getNumber() == 0) {
-                            board.openCellNearBy(y, x);
-                    }
-
-                    return true;
-                }
-
-            }
         }
     }
-
-
-    /**
-     * Checks if a position exists on the board.
-     *
-     * @param x x-coordinate
-     * @param y y-coordinate
-     * @return Returns true if position is within bounds.
-     */
-    public boolean withinBoundsOfGrid(int x, int y) {
-        return (x >= 0 && x < board.size) && (y >= 0 && y < board.size);
-    }
-
-
-    public void gameOver() {
-    }
-
 }
 
 

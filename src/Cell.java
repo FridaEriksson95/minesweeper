@@ -50,6 +50,7 @@ public class Cell {
 
     public void setFlagged(boolean flagged) {
         isFlagged = flagged;
+    }
 
     public int getNumber() {
         return number;
