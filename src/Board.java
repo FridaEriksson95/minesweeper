@@ -1,11 +1,9 @@
 import java.util.ArrayList;
 import java.util.Random;
 
+import static java.awt.SystemColor.text;
+
 public class Board {
-
-    //spelbrädan
-//    Nicholas
-
 
     int size;
     int amountBombs;
@@ -28,7 +26,19 @@ public class Board {
 
     }
 
+
+    public class textColors {
+        public static final String ANSI_RESET = "\u001B[0m";
+        public static final String ANSI_RED = "\u001B[31m";
+        public static final String ANSI_GREEN = "\u001B[32m";
+        public static final String ANSI_BLUE = "\u001B[34m";
+        public static final String ANSI_YELLOW = "\u001B[33m";
+
+    }
+   
+
     public void printBoard(boolean isTwoPlayer) {
+
         System.out.print("    ");
         for (int i = 1; i <= minesweeper.length; i++) {
             System.out.print(String.format("%-2d ", i));
@@ -55,6 +65,11 @@ public class Board {
                 if (minesweeper[i][j].isOpen()) {
                     if (minesweeper[i][j].isBomb()) {
 
+                        System.out.print(textColors.ANSI_RED + " * " + textColors.ANSI_RESET);
+                    } else {
+                        System.out.print(textColors.ANSI_GREEN + " O " + textColors.ANSI_RESET);
+
+
             for (int j = 0; j < minesweeper.length; j++) {
                 // Show * for bombs, O for open cell and _ for hidden
                 Cell cell = minesweeper[i][j];
@@ -77,6 +92,7 @@ public class Board {
                         System.out.print(" O ");
                     } else {
                         System.out.print(" " + cell.getNumber() + " ");
+
                     }
                 } else if (cell.isFlagged()) {
                     System.out.print(" F ");
@@ -114,10 +130,6 @@ public class Board {
             }
         }
     }
-
-
-//    public void isOccupied() {
-//    }
 
 
     public boolean checkWin() {

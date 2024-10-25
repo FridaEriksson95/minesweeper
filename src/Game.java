@@ -5,48 +5,25 @@ import java.util.Scanner;
 public class Game {
     private Board board;
     private final Scanner scanner;
+
+    private final Menu menu;
+
     private Player playerOne;
     private Player playerTwo;
     private Player currentPlayer;
 
 
+
     public Game() {
         this.scanner = new Scanner(System.in);
-    }
+        this.menu = new Menu();
 
-    public void menu() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Let's clear some mines in this Minesweeper game!");
-        System.out.println("1. Start new game");
-        //System.out.println("2. Gameinstructions.");
-        System.out.println("2. Exit");
-        System.out.println("3. Two-player mode");
-        System.out.println("Your choice: ");
-        int choice = scanner.nextInt();
-
-        switch (choice) {
-            case 1:
-                startGame();
-                break;
-           /* case 2:
-                instructions();
-                break;*/
-            case 2:
-                System.out.println("Thanks for playing, exiting...");
-                break;
-            case 3:
-                twoPlayerInit();
-
-                break;
-            default:
-                System.out.println("Invalid choice, try again!");
-                menu();
-        }
     }
 
     public void startGame() {
         int size = 0;
-        Scanner scanner = new Scanner(System.in);
+        int bombs = 0;
+
         while (size < 1 || size > 20) {
             System.out.println("Choose boardsize (1-20): ");
             size = scanner.nextInt();
@@ -54,43 +31,44 @@ public class Game {
                 System.out.println("Invalid input. Choose a size between 1-20.");
             }
         }
-        System.out.println("Choose amount of mines: ");
-        int bombs = scanner.nextInt();
-        board = new Board(size, bombs);
+        while (bombs < 1 || bombs >= (size * size)) {
+            System.out.println("Choose amount of mines (1-" + (size * size -1) + "): ");
+            bombs = scanner.nextInt();
+            if (bombs < 1 || bombs >= (size * size)) {
+                System.out.println("Invalid input. Choose a  number between 1-" + (size * size - 1) + ".");
+            }
+        }
 
+        board = new Board(size, bombs);
     }
-    /*public void instructions() {
-        System.out.println("Gameinstructions:");
-        System.out.println("The goal of the game is to open all of the cells without hitting a mine.");
-        System.out.println("Pick a row and a coloumn to place your move.");
-        System.out.println("If your move hits a mine, you loose.");
-        System.out.println("If you manage to open all the cells without hitting a mine, you win!\n");
-        menu();
-    }*/
 
     public void playGame() {
-        menu();
+        menu.menu(this);
+        while (!board.checkWin() && playerMove(0)) {
+            board.printBoard();
+
+        menu.menu(this);
         while (!board.checkWin() && playerMove(0)) {
             board.printBoard(false);
         }
-
-
         if (board.checkWin()) {
             System.out.println("Congratulations, you won!");
         } else {
             for (int i = 0; i < board.size; i++) {
                 for (int j = 0; j < board.size; j++) {
                     board.getMinesweeper()[i][j].setOpen(true);
-
                 }
             }
             board.printBoard(false);
             System.out.println("You hit a bomb, game over!");
-
         }
         System.out.println("Do you wish to play again? y/n");
-        String input = scanner.next();
+        String input = scanner.next().toLowerCase();
 
+        while (!input.equals("y") && !input.equals("n")) {
+            System.out.println("Invalid input. Enter 'y' to play again or 'n' to exit");
+            input = scanner.next().toLowerCase();
+        }
         if (input.equals("y")) {
             playGame();
         } else {
@@ -98,6 +76,7 @@ public class Game {
             System.exit(0);
         }
     }
+
 
     public void resetGame() {
 
@@ -118,19 +97,21 @@ public class Game {
                 while (true) {
                     System.out.println("Enter a row:");
                     if (scanner.hasNextInt()) {
-                        x = scanner.nextInt();
+                        y = scanner.nextInt();
                         break;
                     } else {
                         System.out.println("You need to enter a number, try again.");
+                        scanner.next();
                     }
                 }
                 while (true) {
                     System.out.println("Enter a column:");
                     if (scanner.hasNextInt()) {
-                        y = scanner.nextInt();
+                        x = scanner.nextInt();
                         break;
                     } else {
                         System.out.println("You need to enter a number, try again.");
+                        scanner.next();
                     }
                 }
                 x--;
@@ -199,11 +180,14 @@ public class Game {
 
                     return false;
                 } else {
-                    System.out.println("You opened Column: " + x + " Row: " + y + ".");
 
+                    System.out.println("You opened Row: " + (y+1) + " Column: " + (x+1) + ".");
+
+            
                     if (position.getNumber() == 0) {
                             board.openCellNearBy(y, x);
                     }
+
 
                     return true;
                 }
@@ -223,10 +207,8 @@ public class Game {
     public boolean withinBoundsOfGrid(int x, int y) {
         return (x >= 0 && x < board.size) && (y >= 0 && y < board.size);
     }
-
-
-    public void gameOver() {
     }
+
 
 
     /**
