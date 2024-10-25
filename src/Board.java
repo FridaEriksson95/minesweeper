@@ -1,10 +1,8 @@
 import java.util.Random;
 
+import static java.awt.SystemColor.text;
+
 public class Board {
-
-    //spelbrädan
-//    Nicholas
-
 
     int size;
     int amountBombs;
@@ -25,6 +23,14 @@ public class Board {
         printBoard();
     }
 
+    public class textColors {
+        public static final String ANSI_RESET = "\u001B[0m";
+        public static final String ANSI_RED = "\u001B[31m";
+        public static final String ANSI_GREEN = "\u001B[32m";
+        public static final String ANSI_BLUE = "\u001B[34m";
+        public static final String ANSI_YELLOW = "\u001B[33m";
+
+    }
     public void printBoard() {
         System.out.print("    ");
         for (int i = 1; i <= minesweeper.length; i++) {
@@ -41,9 +47,9 @@ public class Board {
                 // Show * for bombs, O for open cell and _ for hidden
                 if (minesweeper[i][j].isOpen()) {
                     if (minesweeper[i][j].isBomb()) {
-                        System.out.print(" * ");
+                        System.out.print(textColors.ANSI_RED + " * " + textColors.ANSI_RESET);
                     } else {
-                        System.out.print(" O ");
+                        System.out.print(textColors.ANSI_GREEN + " O " + textColors.ANSI_RESET);
                     }
                 } else {
                     System.out.print(" _ "); //
@@ -70,17 +76,6 @@ public class Board {
             }
         }
     }
-
-
-
-//    public void isOccupied() {
-//    }
-
-    
-
-
-
-   
 
     public boolean checkWin() {
 
