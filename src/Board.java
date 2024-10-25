@@ -35,7 +35,7 @@ public class Board {
         public static final String ANSI_YELLOW = "\u001B[33m";
 
     }
-   
+
 
     public void printBoard(boolean isTwoPlayer) {
 
@@ -50,54 +50,24 @@ public class Board {
             } else {
                 System.out.print(i + 1 + "");
             }
-
-            for (int j = 0 ; j < minesweeper.length; j++) {
-                /**
-                 * Displays the symbols on the board based on the state of each cell:
-                 * - "*" for bombs in open cells.
-                 * - "O" for open cells that are not bombs.
-                 * - "F" for flagged cells.
-                 * - "_" for hidden/unopened cells.
-                 *
-                 * Each cell is checked in sequence.
-                 * @param minesweeper 2D array representing the Minesweeper board with cells.
-                 */
-                if (minesweeper[i][j].isOpen()) {
-                    if (minesweeper[i][j].isBomb()) {
-
-                        System.out.print(textColors.ANSI_RED + " * " + textColors.ANSI_RESET);
-                    } else {
-                        System.out.print(textColors.ANSI_GREEN + " O " + textColors.ANSI_RESET);
-
-
             for (int j = 0; j < minesweeper.length; j++) {
-                // Show * for bombs, O for open cell and _ for hidden
                 Cell cell = minesweeper[i][j];
                 if (cell.isOpen()) {
+                    // Show * for bombs, O for open cell and _ for hidden
                     if (cell.isBomb()) {
-
                         System.out.print(" * ");
-
-                    }else if (isTwoPlayer) {
-                        if (minesweeper[i][j].getLastOpenedBy() == 1) {
-                            System.out.print(" P1 ");
-                        }
-                        else if (minesweeper[i][j].getLastOpenedBy() == 2) {
-                            System.out.print(" P2 ");
-                        }
-                    }else {
-
                     } else if (cell.getNumber() == 0) {
-
                         System.out.print(" O ");
                     } else {
                         System.out.print(" " + cell.getNumber() + " ");
 
                     }
-                } else if (cell.isFlagged()) {
-                    System.out.print(" F ");
                 } else {
-                    System.out.print(" _ ");
+                    if (cell.isFlagged()) {
+                        System.out.print(" F ");
+                    } else {
+                        System.out.print(" _ ");
+                    }
                 }
             }
             System.out.println();
@@ -106,11 +76,11 @@ public class Board {
 
     /**
      * Randomly places bombs on the Minesweeper board.
-     *
+     * <p>
      * - A random row and column are selected for each bomb placement.
      * - The method ensures that the same cell is not selected twice by checking if the cell already contains a bomb.
      * - The process continues until the specified number of bombs in amountBombs chosen by user is placed.
-     *
+     * <p>
      * param "amountBombs" Number of bombs to be placed on the board.
      * param "size" Size of the board, both width and height.
      */
@@ -250,7 +220,6 @@ public class Board {
             }
 
         }
-
 
 
     }
