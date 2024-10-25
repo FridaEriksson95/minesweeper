@@ -22,10 +22,10 @@ public class Board {
         this.minesweeper = new Cell[size][size];
         generateBoard();
         generateBombs();
-        printBoard();
+        printBoard(false);
     }
 
-    public void printBoard() {
+    public void printBoard(boolean isTwoPlayer) {
         System.out.print("    ");
         for (int i = 1; i <= minesweeper.length; i++) {
             System.out.print(String.format("%-2d ", i));
@@ -42,7 +42,14 @@ public class Board {
                 if (minesweeper[i][j].isOpen()) {
                     if (minesweeper[i][j].isBomb()) {
                         System.out.print(" * ");
-                    } else {
+                    }else if (isTwoPlayer) {
+                        if (minesweeper[i][j].getLastOpenedBy() == 1) {
+                            System.out.print(" P1 ");
+                        }
+                        else if (minesweeper[i][j].getLastOpenedBy() == 2) {
+                            System.out.print(" P2 ");
+                        }
+                    }else {
                         System.out.print(" O ");
                     }
                 } else {

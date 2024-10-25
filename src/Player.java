@@ -3,12 +3,12 @@ public class Player {
     int loseCount;
     int points;
     String name;
-    int marker;
+
 
 
     public Player(String name, int marker) {
         this.name = name;
-        this.marker = marker;
+
     }
 
     public int getWinCount() {
@@ -31,15 +31,8 @@ public class Player {
         return points;
     }
 
-    public void setPoints(int points) {
-        this.points = points;
-    }
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 }

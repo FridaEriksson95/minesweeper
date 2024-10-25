@@ -1,6 +1,7 @@
 public class Cell {
     private boolean isOpen;
     private boolean isBomb;
+    private int lastOpenedBy;
 
 //    Cell constructor.
     public Cell() {
@@ -23,5 +24,13 @@ public class Cell {
 
     public void setBomb(boolean bomb) {
         isBomb = bomb;
+    }
+
+    public int getLastOpenedBy() {
+        return lastOpenedBy;
+    }
+
+    public void setLastOpenedBy(int lastOpenedBy) {
+        this.lastOpenedBy = lastOpenedBy;
     }
 }
