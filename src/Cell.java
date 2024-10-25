@@ -1,6 +1,7 @@
 public class Cell {
     private boolean isOpen;
     private boolean isBomb;
+    private int lastOpenedBy;
 
     private boolean isFlagged;
 
@@ -34,6 +35,14 @@ public class Cell {
         isBomb = bomb;
     }
 
+
+    public int getLastOpenedBy() {
+        return lastOpenedBy;
+    }
+
+    public void setLastOpenedBy(int lastOpenedBy) {
+        this.lastOpenedBy = lastOpenedBy;
+
     /**
      * Represents the flagged status of the cell.
      *
@@ -58,6 +67,5 @@ public class Cell {
 
     public void setNumber(int number) {
         this.number = number;
-
     }
 }
