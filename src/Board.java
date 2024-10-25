@@ -37,26 +37,53 @@ public class Board {
             } else {
                 System.out.print(i + 1 + "");
             }
+
+            for (int j = 0 ; j < minesweeper.length; j++) {
+                /**
+                 * Displays the symbols on the board based on the state of each cell:
+                 * - "*" for bombs in open cells.
+                 * - "O" for open cells that are not bombs.
+                 * - "F" for flagged cells.
+                 * - "_" for hidden/unopened cells.
+                 *
+                 * Each cell is checked in sequence.
+                 * @param minesweeper 2D array representing the Minesweeper board with cells.
+                 */
+                if (minesweeper[i][j].isOpen()) {
+                    if (minesweeper[i][j].isBomb()) {
+
             for (int j = 0; j < minesweeper.length; j++) {
                 // Show * for bombs, O for open cell and _ for hidden
                 Cell cell = minesweeper[i][j];
                 if (cell.isOpen()) {
                     if (cell.isBomb()) {
+
                         System.out.print(" * ");
                     } else if (cell.getNumber() == 0) {
                         System.out.print(" O ");
                     } else {
                         System.out.print(" " + cell.getNumber() + " ");
                     }
+                } else if (cell.isFlagged()) {
+                    System.out.print(" F ");
                 } else {
-                    System.out.print(" _ "); //
+                    System.out.print(" _ ");
                 }
             }
             System.out.println();
         }
     }
 
-
+    /**
+     * Randomly places bombs on the Minesweeper board.
+     *
+     * - A random row and column are selected for each bomb placement.
+     * - The method ensures that the same cell is not selected twice by checking if the cell already contains a bomb.
+     * - The process continues until the specified number of bombs in amountBombs chosen by user is placed.
+     *
+     * param "amountBombs" Number of bombs to be placed on the board.
+     * param "size" Size of the board, both width and height.
+     */
     public void generateBombs() {
         Random random = new Random();
         int bombsPlaced = 0;
@@ -68,7 +95,7 @@ public class Board {
 
             // Check if the selected cell is not already occupied by a bomb
             if (!minesweeper[row][col].isBomb()) {
-                minesweeper[row][col].setBomb(true); // Sätt bomben med settern
+                minesweeper[row][col].setBomb(true);
                 bombsPlaced++;
             }
         }
