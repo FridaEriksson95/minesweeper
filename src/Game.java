@@ -126,6 +126,9 @@ public class Game {
                 y--;
 
                 if (withinBoundsOfGrid(x, y)) {
+
+                if (board.withinBoundsOfGrid(x, y)) {
+
                     position = board.getMinesweeper()[y][x];
                     break;
 
@@ -181,6 +184,11 @@ public class Game {
                     return false;
                 } else {
                     System.out.println("You opened Column: " + x + " Row: " + y + ".");
+
+                    if (position.getNumber() == 0) {
+                            board.openCellNearBy(y, x);
+                    }
+
                     return true;
                 }
 
@@ -199,6 +207,7 @@ public class Game {
     public boolean withinBoundsOfGrid(int x, int y) {
         return (x >= 0 && x < board.size) && (y >= 0 && y < board.size);
     }
+
 
     public void gameOver() {
     }

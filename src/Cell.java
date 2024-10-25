@@ -1,14 +1,20 @@
 public class Cell {
     private boolean isOpen;
     private boolean isBomb;
+
     private boolean isFlagged;
+
+    private int number;
+
 
 
     //    Cell constructor.
     public Cell() {
-        isOpen = false;
-        isBomb = false;
-        isFlagged = false;
+        
+        this.isFlagged = false;
+        this.isOpen = false;
+        this.isBomb = false;
+        this.number = 0;
     }
 
 //    Getter and Setters
@@ -44,5 +50,13 @@ public class Cell {
 
     public void setFlagged(boolean flagged) {
         isFlagged = flagged;
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+
     }
 }
