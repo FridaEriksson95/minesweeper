@@ -151,10 +151,10 @@ public class Game {
                     if (!position.isFlagged()) {
                         position.setFlagged(true);
                         System.out.println("Flag placed on Column: " + (x + 1) + " Row: " + (y + 1) + ".");
-                        board.printBoard();
+                        board.printBoard(false);
                     } else {
                         System.out.println("This cell already contains a flag. Try again.");
-                        board.printBoard();
+                        board.printBoard(false);
                      //   continue;
                     }
                    // continue;
@@ -178,7 +178,7 @@ public class Game {
                     }
 
                 }
-                board.printBoard();
+                board.printBoard(false);
             } else {
                 System.out.println("Invalid input. Please enter yes or no.");
               //  continue;

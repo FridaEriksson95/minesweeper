@@ -42,7 +42,7 @@ public class Cell {
 
     public void setLastOpenedBy(int lastOpenedBy) {
         this.lastOpenedBy = lastOpenedBy;
-
+    }
     /**
      * Represents the flagged status of the cell.
      *

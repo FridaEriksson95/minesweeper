@@ -46,18 +46,7 @@ public class Board {
                     // Show * for bombs, O for open cell and _ for hidden
                     if (cell.isBomb()) {
                         System.out.print(" * ");
-
-                    }else if (isTwoPlayer) {
-                        if (minesweeper[i][j].getLastOpenedBy() == 1) {
-                            System.out.print(" P1 ");
-                        }
-                        else if (minesweeper[i][j].getLastOpenedBy() == 2) {
-                            System.out.print(" P2 ");
-                        }
-                    }else {
-
                     } else if (cell.getNumber() == 0) {
-
                         System.out.print(" O ");
                     } else {
                         System.out.print(" " + cell.getNumber() + " ");
