@@ -5,9 +5,7 @@ import java.util.Scanner;
 public class Game {
     private Board board;
     private final Scanner scanner;
-
     private final Menu menu;
-
     private Player playerOne;
     private Player playerTwo;
     private Player currentPlayer;
@@ -46,8 +44,6 @@ public class Game {
         while (!board.checkWin() && playerMove(0)) {
             board.printBoard(false);
         }
-
-        menu.menu(this);
         if (board.checkWin()) {
             System.out.println("Congratulations, you won!");
         } else {
@@ -127,9 +123,9 @@ public class Game {
                     } else {
                         System.out.println("This cell already contains a flag. Try again.");
                         board.printBoard(false);
-                     //   continue;
+//                        continue;
                     }
-                   // continue;
+//                    continue;
                 }
             } else if (input.equalsIgnoreCase("no")) {
                 System.out.println("No flag placed on Column: " + (x + 1) + " Row: " + (y + 1) + ".");
@@ -142,7 +138,7 @@ public class Game {
                     } else {
                         System.out.println("You opened Row: " + (y+1) + " Column: " + (x+1) + ".");
                         if (position.getNumber() == 0) {
-                            board.openCellNearBy(y, x);
+                            board.openCellNearBy(x, y);
                         }
 
                         return true;
