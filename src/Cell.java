@@ -13,7 +13,14 @@ public class Cell {
     public Cell() {
         
         this.isFlagged = false;
-        this.isOpen = false;
+
+//        Debug mode = /true ,open
+        this.isOpen = true;
+
+
+
+
+
         this.isBomb = false;
         this.number = 0;
     }

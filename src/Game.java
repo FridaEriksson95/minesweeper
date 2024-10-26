@@ -17,15 +17,16 @@ public class Game {
         this.menu = new Menu();
     }
 
+//    1 Player
     public void startGame() {
         int size = 0;
         int bombs = 0;
 
-        while (size < 1 || size > 20) {
-            System.out.println("Choose boardsize (1-20): ");
+        while (size < 3 || size > 20) {
+            System.out.println("Choose board size (3-20): ");
             size = scanner.nextInt();
-            if (size < 1 || size > 20) {
-                System.out.println("Invalid input. Choose a size between 1-20.");
+            if (size < 3 || size > 20) {
+                System.out.println("Invalid input. Choose a size between 3-20.");
             }
         }
         while (bombs < 1 || bombs >= (size * size)) {
@@ -202,11 +203,11 @@ public class Game {
     public void startGameTp() {
         int size = 0;
         Scanner scanner = new Scanner(System.in);
-        while (size < 1 || size > 20) {
-            System.out.println("Choose boardsize (1-20): ");
+        while (size < 3 || size > 20) {
+            System.out.println("Choose board size (3-20): ");
             size = scanner.nextInt();
-            if (size < 1 || size > 20) {
-                System.out.println("Invalid input. Choose a size between 1-20.");
+            if (size < 3 || size > 20) {
+                System.out.println("Invalid input. Choose a size between 3-20.");
             }
         }
         System.out.println("Choose amount of mines: ");
