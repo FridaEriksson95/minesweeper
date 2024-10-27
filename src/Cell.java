@@ -10,8 +10,7 @@ public class Cell {
     public Cell() {
 
         this.isFlagged = false;
-//        Debug mode = /true ,open board
-        this.isOpen = true;
+        this.isOpen = false; //        Debug mode = /true ,open board
         this.isBomb = false;
         this.number = 0;
     }
