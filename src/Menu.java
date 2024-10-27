@@ -17,7 +17,7 @@ public class Menu {
                 game.startGame();
                 break;
             case 2:
-                //startGameTwoPlayers();
+                game.twoPlayerInit();
             case 3:
                 instructions(game);
                 break;
