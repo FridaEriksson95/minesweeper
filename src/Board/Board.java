@@ -149,19 +149,19 @@ public class Board {
     }
 
     public void openCellNearBy(int x, int y) {
-        Random random = new Random();
-        int limitCellsToOpen = random.nextInt(5);
-        if (withinBoundsOfGrid(x, y) && !minesweeper[x][y].isOpen() && !minesweeper[x][y].isBomb()) {
-            minesweeper[x][y].setOpen(true);
-            limitCellsToOpen--;
-            if (minesweeper[x][y].getNumber() == 0 && limitCellsToOpen > 0) {
-                ArrayList<OffsetCoordinate> surroundingOffsets = OffsetCoordinate.getSurroundingCellsOffsets();
-                for (OffsetCoordinate offset : surroundingOffsets) {
-                    int surroundingRow = offset.xOffset;
-                    int surroundingColumn = offset.yOffset;
-                    if (limitCellsToOpen > 0 && withinBoundsOfGrid(surroundingRow, surroundingColumn) && !minesweeper[surroundingRow][surroundingColumn].isOpen()) {
-                        openCellNearBy(surroundingRow, surroundingColumn);
-                        limitCellsToOpen--;
+        ArrayList<OffsetCoordinate> surroundingOffsets = OffsetCoordinate.getSurroundingCellsOffsets();
+        if (withinBoundsOfGrid(x, y) && !minesweeper[x][y].isBomb()) {
+            Cell cell = minesweeper[x][y];
+            cell.setOpen(true);
+            if (cell.getNumber() == 0) {
+                for (OffsetCoordinate offsetCoordinate : surroundingOffsets) {
+                    int surroundingX = x + offsetCoordinate.xOffset();
+                    int surroundingY = y + offsetCoordinate.yOffset();
+                    if (withinBoundsOfGrid(surroundingX, surroundingY)) {
+                        Cell surroundingCell = minesweeper[surroundingX][surroundingY];
+                        if (!surroundingCell.isOpen()) {
+                            openCellNearBy(surroundingX, surroundingY);
+                        }
                     }
                 }
             }

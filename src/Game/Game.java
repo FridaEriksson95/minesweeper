@@ -122,14 +122,14 @@ public class Game {
                 if (cell.isOpen()) {
                     System.out.println("That cell is already open, try again.");
                 } else {
+                    if (cell.getNumber() == 0) {
+                        board.openCellNearBy(x, y);
+                    }
                     board.getMinesweeper()[y][x].setOpen(true);
                     if (cell.isBomb()) {
                         return false;
                     } else {
                         System.out.println("You opened Row: " + (y + 1) + " Column: " + (x + 1) + ".");
-                        if (cell.getNumber() == 0) {
-                            board.openCellNearBy(x, y);
-                        }
                         return true;
                     }
                 }
