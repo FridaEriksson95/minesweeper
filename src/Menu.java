@@ -24,6 +24,7 @@ public class Menu {
                     break;
                 case 3:
                     instructions();
+                    menu(game);
                     break;
                 case 4:
                     System.out.println("Thanks for playing, exiting...");
