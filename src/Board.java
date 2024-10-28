@@ -1,63 +1,59 @@
 import java.util.ArrayList;
 import java.util.Random;
 
-import static java.awt.SystemColor.text;
-
 public class Board {
-
-    int size;
-    int amountBombs;
-    /**
-     * Ta bort 10/10
-     */
+    private int size;
+    private int amountBombs;
     private Cell[][] minesweeper;
 
-    //    Constructor
-    public Board(int size, int amountBombs) {
-
-        this.size = size;
-        this.amountBombs = amountBombs;
-//  Create board
-        this.minesweeper = new Cell[size][size];
+    public Board() {
+        this.size = 10;
+        this.amountBombs = 10;
         generateBoard();
     }
 
-    public class textColors {
-        public static final String ANSI_RESET = "\u001B[0m";
-        public static final String ANSI_RED = "\u001B[31m";
-        public static final String ANSI_GREEN = "\u001B[32m";
-        public static final String ANSI_BLUE = "\u001B[34m";
-        public static final String ANSI_YELLOW = "\u001B[33m";
-        public static final String ANSI_PURPLE = "\u001B[35m";
+    private record OffsetCoordinate(int xOffset, int yOffset) {
+
+        private static ArrayList<OffsetCoordinate> getSurroundingCellsOffsets() {
+            ArrayList<OffsetCoordinate> offsets = new ArrayList<>();
+            offsets.add(new OffsetCoordinate(1, 0)); //Right
+            offsets.add(new OffsetCoordinate(1, -1)); //Bot-right
+            offsets.add(new OffsetCoordinate(0, -1)); //Bot
+            offsets.add(new OffsetCoordinate(-1, -1)); //Bot-left
+            offsets.add(new OffsetCoordinate(-1, 0)); //Left
+            offsets.add(new OffsetCoordinate(-1, 1)); //Top-left
+            offsets.add(new OffsetCoordinate(0, 1)); //Top
+            offsets.add(new OffsetCoordinate(1, 1)); //Top-right
+            return offsets;
+        }
     }
 
     public void printBoard(boolean isTwoPlayer) {
         System.out.print("    ");
         for (int i = 1; i <= minesweeper.length; i++) {
-            System.out.print(String.format("%-2d ", i));
+            System.out.printf("%-2d ", i);
         }
         for (int i = 0; i < minesweeper.length; i++) {
             System.out.println();
             if (i < 10) {
-                System.out.print(String.format("%-2d ", i + 1));
+                System.out.printf("%-2d ", i + 1);
             } else {
                 System.out.print(i + 1 + "");
             }
             for (int j = 0; j < minesweeper.length; j++) {
                 Cell cell = minesweeper[i][j];
                 if (cell.isOpen()) {
-                    // Show * for bombs, O for open cell and _ for hidden
                     if (cell.isBomb()) {
-                        System.out.print(textColors.ANSI_YELLOW + " * " + textColors.ANSI_RESET);
+                        System.out.print(Colors.ANSI_YELLOW + " * " + Colors.ANSI_RESET);
                     } else if (cell.getNumber() == 0) {
                         if (isTwoPlayer) {
                             if (cell.getLastOpenedBy() == 1) {
-                                System.out.print(textColors.ANSI_BLUE + " 0 " + textColors.ANSI_RESET);
-                            }else {
-                                System.out.print(textColors.ANSI_PURPLE + " 0 " + textColors.ANSI_RESET);
+                                System.out.print(Colors.ANSI_BLUE + " 0 " + Colors.ANSI_RESET);
+                            } else {
+                                System.out.print(Colors.ANSI_PURPLE + " 0 " + Colors.ANSI_RESET);
                             }
-                        }else {
-                            System.out.print(textColors.ANSI_GREEN + " O " + textColors.ANSI_RESET);
+                        } else {
+                            System.out.print(Colors.ANSI_GREEN + " O " + Colors.ANSI_RESET);
                         }
                     } else {
                         System.out.print(" " + cell.getNumber() + " ");
@@ -65,7 +61,7 @@ public class Board {
                     }
                 } else {
                     if (cell.isFlagged()) {
-                        System.out.print(textColors.ANSI_RED + " F " + textColors.ANSI_RESET);
+                        System.out.print(Colors.ANSI_RED + " F " + Colors.ANSI_RESET);
                     } else {
                         System.out.print(" _ ");
                     }
@@ -73,6 +69,18 @@ public class Board {
             }
             System.out.println();
         }
+    }
+
+
+    private void generateBoard() {
+        this.minesweeper = new Cell[size][size];
+        for (int i = 0; i < minesweeper.length; i++) {
+            for (int j = 0; j < minesweeper.length; j++) {
+                minesweeper[i][j] = new Cell();
+            }
+        }
+        generateBombs();
+        generateNumbers();
     }
 
     /**
@@ -85,16 +93,12 @@ public class Board {
      * param "amountBombs" Number of bombs to be placed on the board.
      * param "size" Size of the board, both width and height.
      */
-    public void generateBombs() {
+    private void generateBombs() {
         Random random = new Random();
         int bombsPlaced = 0;
-
-        // Loop until the required number of bombs is placed
         while (bombsPlaced < amountBombs) {
             int row = random.nextInt(size);
             int col = random.nextInt(size);
-
-            // Check if the selected cell is not already occupied by a bomb
             if (!minesweeper[row][col].isBomb()) {
                 minesweeper[row][col].setBomb(true);
                 bombsPlaced++;
@@ -102,81 +106,34 @@ public class Board {
         }
     }
 
-    public boolean checkWin() {
-
-//        Goes through cells
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-//                Reference
-                Cell cell = minesweeper[i][j];
-
-//                Checks if cell is NOT bomb and not open/tapped
-                if (!cell.isBomb() && !cell.isOpen()) {
-                    return false;
-                }
-            }
-        }
-
-        return true;
-    }
-
-    public void generateBoard() {
-        for (int i = 0; i < minesweeper.length; i++) {
-            for (int j = 0; j < minesweeper.length; j++) {
-                minesweeper[i][j] = new Cell();
-            }
-        }
-        generateBombs();
-        generateNumbers();
-    }
-
-    private class IntPair {
-        private final int xOffset;
-        private final int yOffset;
-
-        public IntPair(int xOffset, int yOffset) {
-            this.xOffset = xOffset;
-            this.yOffset = yOffset;
-        }
-
-        public int getX() {
-            return xOffset;
-        }
-
-        public int getY() {
-            return yOffset;
-        }
-    }
-
-    private ArrayList<IntPair> offSetsForSurroundingCells() {
-        ArrayList<IntPair> offsets = new ArrayList<>();
-        offsets.add(new IntPair(1, 0)); //Right
-        offsets.add(new IntPair(1, -1)); //Bot-right
-        offsets.add(new IntPair(0, -1)); //Bot
-        offsets.add(new IntPair(-1, -1)); //Bot-left
-        offsets.add(new IntPair(-1, 0)); //Left
-        offsets.add(new IntPair(-1, 1)); //Top-left
-        offsets.add(new IntPair(0, 1)); //Top
-        offsets.add(new IntPair(1, 1)); //Top-right
-        return offsets;
-    }
-
     private void generateNumbers() {
-        ArrayList<IntPair> surroundingOffsets = offSetsForSurroundingCells();
+        ArrayList<OffsetCoordinate> surroundingOffsets = OffsetCoordinate.getSurroundingCellsOffsets();
         for (int column = 0; column < size; column++) {
             for (int row = 0; row < size; row++) {
                 Cell cell = minesweeper[row][column];
-                for (IntPair offset : surroundingOffsets) {
-                    int surroundingRow = row + offset.getX();
-                    int surroundingColumn = column + offset.getY();
+                for (OffsetCoordinate offset : surroundingOffsets) {
+                    int surroundingRow = row + offset.xOffset;
+                    int surroundingColumn = column + offset.yOffset;
                     if (withinBoundsOfGrid(surroundingRow, surroundingColumn) && (minesweeper[surroundingRow][surroundingColumn].isBomb())) {
                         cell.setNumber(cell.getNumber() + 1);
                     }
                 }
             }
         }
-
     }
+
+    public boolean checkWin() {
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                Cell cell = minesweeper[i][j];
+                if (!cell.isBomb() && !cell.isOpen()) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
 
     /**
      * Checks if a position exists on the board.
@@ -189,28 +146,17 @@ public class Board {
         return (x >= 0 && x < size) && (y >= 0 && y < size);
     }
 
-    //    Methods that checks cells to open nearby
     public void openCellNearBy(int x, int y) {
         Random random = new Random();
         int limitCellsToOpen = random.nextInt(5);
-
-//        Check if coordinates are within bounds in board size & if cell is open, and no bomb
         if (withinBoundsOfGrid(x, y) && !minesweeper[x][y].isOpen() && !minesweeper[x][y].isBomb()) {
-            //        Open cell if empty and no bomb nearby
             minesweeper[x][y].setOpen(true);
             limitCellsToOpen--;
-
-//            Checks if cell is empty and if there is more cells to open.
             if (minesweeper[x][y].getNumber() == 0 && limitCellsToOpen > 0) {
-//                Get all surrounding cells
-                ArrayList<IntPair> surroundingOffsets = offSetsForSurroundingCells();
-
-//                Loop trough every surrounding cell
-                for (IntPair offset : surroundingOffsets) {
-                    int surroundingRow = offset.getX();
-                    int surroundingColumn = offset.getY();
-
-//                    Needs to check if new cell is within board size bounds && NOT opened
+                ArrayList<OffsetCoordinate> surroundingOffsets = OffsetCoordinate.getSurroundingCellsOffsets();
+                for (OffsetCoordinate offset : surroundingOffsets) {
+                    int surroundingRow = offset.xOffset;
+                    int surroundingColumn = offset.yOffset;
                     if (limitCellsToOpen > 0 && withinBoundsOfGrid(surroundingRow, surroundingColumn) && !minesweeper[surroundingRow][surroundingColumn].isOpen()) {
                         openCellNearBy(surroundingRow, surroundingColumn);
                         limitCellsToOpen--;
@@ -222,5 +168,15 @@ public class Board {
 
     public Cell[][] getMinesweeper() {
         return minesweeper;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setBoard(int size, int amountBombs) {
+        this.size = size;
+        this.amountBombs = amountBombs;
+        generateBoard();
     }
 }

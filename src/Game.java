@@ -1,6 +1,4 @@
-    import jdk.jshell.EvalException;
-
-    import java.util.Scanner;
+import java.util.Scanner;
 
     public class Game {
         private Board board;
@@ -19,7 +17,6 @@
         public void startGame() {
             int size = 0;
             int bombs = 0;
-
             while (size < 3 || size > 20) {
                 System.out.println("Choose board size (3-20): ");
                 size = scanner.nextInt();
@@ -34,7 +31,6 @@
                     System.out.println("Invalid input. Choose a  number between 1-" + (size * size - 1) + ".");
                 }
             }
-
             board = new Board(size, bombs);
             playGame();
         }
@@ -46,8 +42,8 @@
             if (board.checkWin()) {
                 System.out.println("Congratulations, you won!");
             } else {
-                for (int i = 0; i < board.size; i++) {
-                    for (int j = 0; j < board.size; j++) {
+                for (int i = 0; i < board.getSize(); i++) {
+                    for (int j = 0; j < board.getSize(); j++) {
                         board.getMinesweeper()[i][j].setOpen(true);
                     }
                 }
@@ -213,8 +209,8 @@
                 System.out.println(currentPlayer.getName() + "'s turn!");
 
                 if (!playerMove(currentPlayer == playerOne ? 1 : 2)) {
-                    for (int i = 0; i < board.size; i++) {
-                        for (int j = 0; j < board.size; j++) {
+                    for (int i = 0; i < board.getSize(); i++) {
+                        for (int j = 0; j < board.getSize(); j++) {
                             board.getMinesweeper()[i][j].setOpen(true);
                         }
                     }
