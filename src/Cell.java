@@ -1,24 +1,21 @@
 public class Cell {
+
     private boolean isOpen;
     private boolean isBomb;
     private int lastOpenedBy;
-
     private boolean isFlagged;
-
     private int number;
-
-
 
     //    Cell constructor.
     public Cell() {
-        
+
         this.isFlagged = false;
-        this.isOpen = false;
+        this.isOpen = false; //        Debug mode = /true ,open board
         this.isBomb = false;
         this.number = 0;
     }
 
-//    Getter and Setters
+    //    Getter and Setters
     public boolean isOpen() {
         return isOpen;
     }
@@ -31,9 +28,7 @@ public class Cell {
         return isBomb;
     }
 
-    public void setBomb(boolean bomb) {
-        isBomb = bomb;
-    }
+    public void setBomb(boolean bomb) { isBomb = bomb; }
 
 
     public int getLastOpenedBy() {
@@ -43,12 +38,13 @@ public class Cell {
     public void setLastOpenedBy(int lastOpenedBy) {
         this.lastOpenedBy = lastOpenedBy;
     }
+
     /**
      * Represents the flagged status of the cell.
-     *
+     * <p>
      * - `isFlagged`: Indicates whether the player has flagged the cell
      * as potentially containing a bomb.
-     *
+     * <p>
      * Getters and setters:
      * - `isFlagged()`: Returns the current flagged status.
      * - `setFlagged()`: Sets the flagged status of the cell.
@@ -65,7 +61,5 @@ public class Cell {
         return number;
     }
 
-    public void setNumber(int number) {
-        this.number = number;
-    }
+    public void setNumber(int number) {this.number = number;}
 }

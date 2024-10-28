@@ -5,9 +5,7 @@ import java.util.Scanner;
 public class Game {
     private Board board;
     private final Scanner scanner;
-
     private final Menu menu;
-
     private Player playerOne;
     private Player playerTwo;
     private Player currentPlayer;
@@ -19,15 +17,16 @@ public class Game {
         this.menu = new Menu();
     }
 
+//    1 Player
     public void startGame() {
         int size = 0;
         int bombs = 0;
 
-        while (size < 1 || size > 20) {
-            System.out.println("Choose boardsize (1-20): ");
+        while (size < 3 || size > 20) {
+            System.out.println("Choose board size (3-20): ");
             size = scanner.nextInt();
-            if (size < 1 || size > 20) {
-                System.out.println("Invalid input. Choose a size between 1-20.");
+            if (size < 3 || size > 20) {
+                System.out.println("Invalid input. Choose a size between 3-20.");
             }
         }
         while (bombs < 1 || bombs >= (size * size)) {
@@ -46,8 +45,6 @@ public class Game {
         while (!board.checkWin() && playerMove(0)) {
             board.printBoard(false);
         }
-
-        menu.menu(this);
         if (board.checkWin()) {
             System.out.println("Congratulations, you won!");
         } else {
@@ -127,9 +124,9 @@ public class Game {
                     } else {
                         System.out.println("This cell already contains a flag. Try again.");
                         board.printBoard(false);
-                     //   continue;
+//                        continue;
                     }
-                   // continue;
+//                    continue;
                 }
             } else if (input.equalsIgnoreCase("no")) {
                 System.out.println("No flag placed on Column: " + (x + 1) + " Row: " + (y + 1) + ".");
@@ -142,7 +139,7 @@ public class Game {
                     } else {
                         System.out.println("You opened Row: " + (y+1) + " Column: " + (x+1) + ".");
                         if (position.getNumber() == 0) {
-                            board.openCellNearBy(y, x);
+                            board.openCellNearBy(x, y);
                         }
 
                         return true;
@@ -206,11 +203,11 @@ public class Game {
     public void startGameTp() {
         int size = 0;
         Scanner scanner = new Scanner(System.in);
-        while (size < 1 || size > 20) {
-            System.out.println("Choose boardsize (1-20): ");
+        while (size < 3 || size > 20) {
+            System.out.println("Choose board size (3-20): ");
             size = scanner.nextInt();
-            if (size < 1 || size > 20) {
-                System.out.println("Invalid input. Choose a size between 1-20.");
+            if (size < 3 || size > 20) {
+                System.out.println("Invalid input. Choose a size between 3-20.");
             }
         }
         System.out.println("Choose amount of mines: ");
