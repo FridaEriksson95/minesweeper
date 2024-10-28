@@ -3,31 +3,27 @@ import java.util.Scanner;
 public class Menu {
 
     public void menu(Game game) {
-//        Scanner scanner = new Scanner(System.in);
         int choice = -1;
 
-        while(choice == -1) {
+        while (choice == -1) {
             System.out.println("Let's clear some mines in this Minesweeper game!");
             System.out.println("1. Start game");
             System.out.println("2. Start game with two players ");
             System.out.println("3. Game instructions");
             System.out.println("4. Exit");
             System.out.println("Your choice: ");
-//            int choice = scanner.nextInt();
 
-//                choice = Integer.parseInt(scanner.nextLine().trim().replaceAll("^\"|\"$", ""));;
             choice = InputHandler.getNewIntInRange(1, 4);
-//            System.out.println("you entered " + choice); //Debug mode,
+
             switch (choice) {
                 case 1:
                     game.startGame();
-                    //game.playerMove? -> Single player?
                     break;
                 case 2:
-                    //startGameTwoPlayers(); -> Two player
-                   break;
+                    game.twoPlayerInit();
+                    break;
                 case 3:
-                    instructions(game);
+                    instructions();
                     break;
                 case 4:
                     System.out.println("Thanks for playing, exiting...");
@@ -35,8 +31,10 @@ public class Menu {
                     break;
                 default:
                     System.out.println("Invalid option, must choose 1-4 from list, choose again");
-//                        System.out.println("switch default comment");
+
             }
+        }
+    }
 
     public void instructions() {
         System.out.println();
@@ -45,7 +43,6 @@ public class Menu {
         System.out.println("Pick a row and a coloumn to place your move.");
         System.out.println("If your move hits a mine, you loose.");
         System.out.println("If you manage to open all the cells without hitting a mine, you win!\n" + Board.textColors.ANSI_RESET);
-       
+
+            }
         }
-    }
-}
