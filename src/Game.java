@@ -1,5 +1,4 @@
     import jdk.jshell.EvalException;
-
     import java.util.Scanner;
 
     public class Game {
@@ -10,16 +9,19 @@
         private Player playerTwo;
         private Player currentPlayer;
 
+        //constructor for scanner and menu
         public Game() {
             this.scanner = new Scanner(System.in);
             this.menu = new Menu();
         }
 
-    //    1 Player
+        /**
+         * Method for player to choose board size between 3-20 and number of bombs related to chosen board size
+         */
         public void startGame() {
             int size = 0;
             int bombs = 0;
-
+//TODO spel dör om spelare skriver in bokstäver, här och under twoplayer
             while (size < 3 || size > 20) {
                 System.out.println("Choose board size (3-20): ");
                 size = scanner.nextInt();
@@ -28,10 +30,10 @@
                 }
             }
             while (bombs < 1 || bombs >= (size * size)) {
-                System.out.println("Choose amount of mines (1-" + (size * size -1) + "): ");
+                System.out.println("Choose amount of bombs (1-" + (size * size -1) + "): ");
                 bombs = scanner.nextInt();
                 if (bombs < 1 || bombs >= (size * size)) {
-                    System.out.println("Invalid input. Choose a  number between 1-" + (size * size - 1) + ".");
+                    System.out.println("Invalid input. Choose a number between 1-" + (size * size - 1) + ".");
                 }
             }
 
@@ -59,11 +61,8 @@
 
         /**
          * Asks the user to enter an x- and y-position.
-         *
          * @return Returns true when move is made and false if a bomb is hit.
          */
-
-        //TODO lägg till  position.setLastOpenedBy(playerNumber);
         public boolean playerMove(int playerNumber) {
             Cell position;
             while (true) {
@@ -99,8 +98,9 @@
                     } else {
                         System.out.println("The position you entered is not on the board.");
                     }
-
                 }
+                //TODO - fånga upp om spelaren svarar varken yes eller no så kommer invalid input men sedan går den vidare till enter row istället för att be spelaren svara yes or no
+                //TODO - går ej att flagga två gånger efter varandra, spelares tur igen efter man flaggat? isf borde fråga om att flagga ej komma upp på nästa drag?
                 System.out.println("Do you want to place a flag on this cell? yes/no:");
                 String input = scanner.next();
                 if (input.equalsIgnoreCase("yes")) {
@@ -112,9 +112,7 @@
                         } else {
                             System.out.println("This cell already contains a flag. Try again.");
                             board.printBoard(false);
-    //                        continue;
                         }
-    //                    continue;
                     }
                 } else if (input.equalsIgnoreCase("no")) {
                     System.out.println("No flag placed on Row: " + (y + 1) + " Column: " + (x + 1) + ".");
@@ -129,14 +127,12 @@
                             if (position.getNumber() == 0) {
                                 board.openCellNearBy(x, y);
                             }
-
                             return true;
                         }
                     }
                     board.printBoard(false);
                 } else {
                     System.out.println("Invalid input. Please enter yes or no.");
-                  //  continue;
                 }
             }
         }
@@ -145,19 +141,20 @@
          * Method to Create player one and two.
          */
         public void twoPlayerInit() {
-            System.out.println("Player: 1 enter name");
+            System.out.println("Player 1, enter name: ");
             String playerOneName = getNextString();
             playerOne = new Player(playerOneName, 1, "\u001B[34m");
-            System.out.println("Player: 2 enter name ");
+            System.out.println("Player 2, enter name: ");
             String playerTwoName = getNextString();
             playerTwo = new Player(playerTwoName, 2, "\u001B[35m");
+
+            //TODO - lägga till så den printar ut typ "playerOneName and playerTwoName, let's begin! Lina?
 
             startGameTp();
         }
 
         /**
          * Method to handle input
-         *
          * @return a String
          */
         public String getNextString() {
@@ -196,10 +193,10 @@
                 }
             }
             while (bombs < 1 || bombs >= (size * size)) {
-                System.out.println("Choose amount of mines (1-" + (size * size - 1) + "): ");
+                System.out.println("Choose amount of bombs (1-" + (size * size - 1) + "): ");
                 bombs = scanner.nextInt();
                 if (bombs < 1 || bombs >= (size * size)) {
-                    System.out.println("Invalid input. Choose a  number between 1-" + (size * size - 1) + ".");
+                    System.out.println("Invalid input. Choose a number between 1-" + (size * size - 1) + ".");
                 }
             }
             currentPlayer = playerOne;
@@ -237,7 +234,7 @@
                 currentPlayer = (currentPlayer == playerOne) ? playerTwo : playerOne;
             }
         }
-
+//TODO - behöver wins finnas kvar?
         public void printStats() {
             System.out.println("\n========= Player Statistics =========");
             System.out.printf("%-15s | %-6s | %-7s | %-6s %n", "Player", "Wins", "Losses", "Points");
@@ -275,6 +272,5 @@
                 System.out.println("Thank you for playing!");
                 System.exit(0);
             }
-
         }
     }
