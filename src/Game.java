@@ -213,6 +213,7 @@
                 }
             }
             currentPlayer = playerOne;
+            board = new Board(size,bombs);
             playGameTp();
         }
 
@@ -250,17 +251,17 @@
             System.out.printf("%-15s | %-6s | %-7s | %-6s %n", "Player", "Wins", "Losses", "Points");
             System.out.println("-------------------------------------");
 
-            System.out.printf(Board.textColors.ANSI_BLUE + "%-15s | %-6d | %-7d | %-6d %n",
+            System.out.printf( "%-15s | %-6d | %-7d | %-6d %n",
                     playerOne.getName(),
                     playerOne.getWinCount(),
                     playerOne.getLoseCount(),
-                    playerOne.getPoints() + Board.textColors.ANSI_RESET);
+                    playerOne.getPoints());
 
-            System.out.printf(Board.textColors.ANSI_PURPLE + "%-15s | %-6d | %-7d | %-6d %n",
+            System.out.printf( "%-15s | %-6d | %-7d | %-6d %n",
                     playerTwo.getName(),
                     playerTwo.getWinCount(),
                     playerTwo.getLoseCount(),
-                    playerTwo.getPoints() + Board.textColors.ANSI_RESET);
+                    playerTwo.getPoints());
 
             System.out.println("=====================================\n");
         }
