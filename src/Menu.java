@@ -15,7 +15,7 @@ public class Menu {
 
             switch (choice) {
                 case 1:
-                    game.startGame();
+                    game.singlePlayer();
                     break;
                 case 2:
                     game.twoPlayerInit();

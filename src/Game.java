@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
     public class Game {
-        private Board board;
+        private final Board board;
         private final Scanner scanner;
         private final Menu menu;
         private Player playerOne;
@@ -9,12 +9,18 @@ import java.util.Scanner;
         private Player currentPlayer;
 
         public Game() {
+            this.board = new Board();
             this.scanner = new Scanner(System.in);
             this.menu = new Menu();
         }
 
     //    1 Player
-        public void startGame() {
+        public void singlePlayer() {
+            setupBoard();
+            playGame();
+        }
+
+        private void setupBoard() {
             int size = 0;
             int bombs = 0;
             while (size < 3 || size > 20) {
@@ -31,14 +37,13 @@ import java.util.Scanner;
                     System.out.println("Invalid input. Choose a  number between 1-" + (size * size - 1) + ".");
                 }
             }
-            board = new Board(size, bombs);
-            playGame();
+            board.setBoard(size, bombs);
         }
 
         public void playGame() {
-            while (!board.checkWin() && playerMove(0)) {
+            do {
                 board.printBoard(false);
-            }
+            } while (!board.checkWin() && playerMove(0));
             if (board.checkWin()) {
                 System.out.println("Congratulations, you won!");
             } else {
@@ -147,7 +152,6 @@ import java.util.Scanner;
             System.out.println("Player: 2 enter name ");
             String playerTwoName = getNextString();
             playerTwo = new Player(playerTwoName, 2, "\u001B[35m");
-
             startGameTp();
         }
 
@@ -181,25 +185,8 @@ import java.util.Scanner;
          * Method to start the twoPlayerMode
          */
         public void startGameTp() {
-            int size = 0;
-            int bombs = 0;
-            Scanner scanner = new Scanner(System.in);
-            while (size < 3 || size > 20) {
-                System.out.println("Choose board size (3-20): ");
-                size = scanner.nextInt();
-                if (size < 3 || size > 20) {
-                    System.out.println("Invalid input. Choose a size between 3-20.");
-                }
-            }
-            while (bombs < 1 || bombs >= (size * size)) {
-                System.out.println("Choose amount of mines (1-" + (size * size - 1) + "): ");
-                bombs = scanner.nextInt();
-                if (bombs < 1 || bombs >= (size * size)) {
-                    System.out.println("Invalid input. Choose a  number between 1-" + (size * size - 1) + ".");
-                }
-            }
+           setupBoard();
             currentPlayer = playerOne;
-            board = new Board(size,bombs);
             playGameTp();
         }
 
@@ -262,7 +249,7 @@ import java.util.Scanner;
                 input = scanner.next().toLowerCase();
             }
             if (input.equals("y") && !isTwoPlayer) {
-                startGame();
+                singlePlayer();
 
             }else if (input.equalsIgnoreCase("y") && isTwoPlayer) {
                 twoPlayerInit();
