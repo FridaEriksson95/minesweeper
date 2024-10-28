@@ -106,10 +106,12 @@
                     y--;
                     if (board.withinBoundsOfGrid(x, y)) {
                         position = board.getMinesweeper()[y][x];
+                        position.setLastOpenedBy(playerNumber);
                         break;
                     } else {
                         System.out.println("The position you entered is not on the board.");
                     }
+
                 }
                 System.out.println("Do you want to place a flag on this cell? yes/no:");
                 String input = scanner.next();
