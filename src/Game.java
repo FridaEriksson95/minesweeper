@@ -36,10 +36,10 @@
             }
 
             board = new Board(size, bombs);
+            playGame();
         }
 
         public void playGame() {
-            menu.menu(this);
             while (!board.checkWin() && playerMove(0)) {
                 board.printBoard(false);
             }
