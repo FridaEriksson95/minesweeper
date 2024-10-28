@@ -2,8 +2,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Board {
-    private int size;
-    private int amountBombs;
+    private int size, amountBombs;
     private Cell[][] minesweeper;
 
     public Board() {
@@ -70,7 +69,6 @@ public class Board {
             System.out.println();
         }
     }
-
 
     private void generateBoard() {
         this.minesweeper = new Cell[size][size];

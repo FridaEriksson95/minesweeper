@@ -1,10 +1,10 @@
 public class Player {
-    int winCount;
-    int loseCount;
-    int points;
-    String name;
-    int marker;
-    String color;
+    private int winCount;
+    private int loseCount;
+    private int points;
+    private String name;
+    private int marker;
+    private String color;
 
     public Player(String name, int marker, String color) {
         this.name = name;
@@ -12,8 +12,10 @@ public class Player {
         this.color = color;
     }
 
-    public String getColorMarker() {
-        return color + marker + "\u001B[0m";
+    public void resetScore() {
+        this.points = 0;
+        this.loseCount = 0;
+        this.winCount = 0;
     }
 
     public int getWinCount() {
@@ -38,5 +40,13 @@ public class Player {
 
     public String getName() {
         return name;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

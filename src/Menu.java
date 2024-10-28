@@ -2,7 +2,6 @@ public class Menu {
 
     public void menu(Game game) {
         int choice = -1;
-
         while (choice == -1) {
             System.out.println("Let's clear some mines in this Minesweeper game!");
             System.out.println("1. Start game");
@@ -10,9 +9,7 @@ public class Menu {
             System.out.println("3. Game instructions");
             System.out.println("4. Exit");
             System.out.println("Your choice: ");
-
             choice = InputHandler.getNewIntInRange(1, 4);
-
             switch (choice) {
                 case 1:
                     game.singlePlayer();
@@ -30,7 +27,6 @@ public class Menu {
                     break;
                 default:
                     System.out.println("Invalid option, must choose 1-4 from list, choose again");
-
             }
         }
     }
@@ -42,5 +38,5 @@ public class Menu {
         System.out.println("Pick a row and a coloumn to place your move.");
         System.out.println("If your move hits a mine, you loose.");
         System.out.println("If you manage to open all the cells without hitting a mine, you win!\n" + Colors.ANSI_RESET);
-            }
-        }
+    }
+}

@@ -1,21 +1,17 @@
 public class Cell {
-
     private boolean isOpen;
     private boolean isBomb;
     private int lastOpenedBy;
     private boolean isFlagged;
     private int number;
 
-    //    Cell constructor.
     public Cell() {
-
         this.isFlagged = false;
-        this.isOpen = false; //        Debug mode = /true ,open board
+        this.isOpen = false;
         this.isBomb = false;
         this.number = 0;
     }
 
-    //    Getter and Setters
     public boolean isOpen() {
         return isOpen;
     }
@@ -29,8 +25,8 @@ public class Cell {
     }
 
     public void setBomb(boolean bomb) {
-        isBomb = bomb; }
-
+        isBomb = bomb;
+    }
 
     public int getLastOpenedBy() {
         return lastOpenedBy;
@@ -62,7 +58,7 @@ public class Cell {
         return number;
     }
 
-
     public void setNumber(int number) {
-        this.number = number;}
+        this.number = number;
+    }
 }
