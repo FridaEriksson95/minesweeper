@@ -3,12 +3,17 @@ public class Player {
     int loseCount;
     int points;
     String name;
+    int marker;
+    String color;
 
-
-
-    public Player(String name, int marker) {
+    public Player(String name, int marker, String color) {
         this.name = name;
+        this.marker = marker;
+        this.color = color;
+    }
 
+    public String getColorMarker() {
+        return color + marker + "\u001B[0m";
     }
 
     public int getWinCount() {
@@ -30,7 +35,6 @@ public class Player {
     public int getPoints() {
         return points;
     }
-
 
     public String getName() {
         return name;

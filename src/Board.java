@@ -24,19 +24,16 @@ public class Board {
 
     }
 
-
     public class textColors {
         public static final String ANSI_RESET = "\u001B[0m";
         public static final String ANSI_RED = "\u001B[31m";
         public static final String ANSI_GREEN = "\u001B[32m";
         public static final String ANSI_BLUE = "\u001B[34m";
         public static final String ANSI_YELLOW = "\u001B[33m";
-
+        public static final String ANSI_PURPLE = "\u001B[35m";
     }
 
-
     public void printBoard(boolean isTwoPlayer) {
-
         System.out.print("    ");
         for (int i = 1; i <= minesweeper.length; i++) {
             System.out.print(String.format("%-2d ", i));
@@ -53,16 +50,16 @@ public class Board {
                 if (cell.isOpen()) {
                     // Show * for bombs, O for open cell and _ for hidden
                     if (cell.isBomb()) {
-                        System.out.print(" * ");
+                        System.out.print(textColors.ANSI_YELLOW + " * " + textColors.ANSI_RESET);
                     } else if (cell.getNumber() == 0) {
-                        System.out.print(" O ");
+                        System.out.print(textColors.ANSI_GREEN + " O " + textColors.ANSI_RESET);
                     } else {
                         System.out.print(" " + cell.getNumber() + " ");
 
                     }
                 } else {
                     if (cell.isFlagged()) {
-                        System.out.print(" F ");
+                        System.out.print(textColors.ANSI_RED + " F " + textColors.ANSI_RESET);
                     } else {
                         System.out.print(" _ ");
                     }
@@ -98,7 +95,6 @@ public class Board {
             }
         }
     }
-
 
     public boolean checkWin() {
 
@@ -214,17 +210,11 @@ public class Board {
                         limitCellsToOpen--;
                     }
                 }
-
             }
-
         }
-
-
     }
-
 
     public Cell[][] getMinesweeper() {
         return minesweeper;
     }
 }
-

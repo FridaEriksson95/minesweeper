@@ -6,7 +6,7 @@ public class Menu {
 //        Scanner scanner = new Scanner(System.in);
         int choice = -1;
 
-        while(choice != 0) {
+        while(choice == -1) {
             System.out.println("Let's clear some mines in this Minesweeper game!");
             System.out.println("1. Start game");
             System.out.println("2. Start game with two players ");
@@ -25,8 +25,7 @@ public class Menu {
                     break;
                 case 2:
                     //startGameTwoPlayers(); -> Two player
-                    dummyMethod(); //Dummy method for console testing
-                    break;
+                   break;
                 case 3:
                     instructions(game);
                     break;
@@ -39,18 +38,14 @@ public class Menu {
 //                        System.out.println("switch default comment");
             }
 
-        }
-    }
-    public void instructions(Game game) {
-        System.out.println("Gameinstructions:");
+    public void instructions() {
+        System.out.println();
+        System.out.println(Board.textColors.ANSI_BLUE + "Gameinstructions:");
         System.out.println("The goal of the game is to open all of the cells without hitting a mine.");
         System.out.println("Pick a row and a coloumn to place your move.");
         System.out.println("If your move hits a mine, you loose.");
-        System.out.println("If you manage to open all the cells without hitting a mine, you win!\n");
-//                menu(game);
-    }
-
-    public void dummyMethod() {
-        System.out.println("nothing here");
+        System.out.println("If you manage to open all the cells without hitting a mine, you win!\n" + Board.textColors.ANSI_RESET);
+       
+        }
     }
 }

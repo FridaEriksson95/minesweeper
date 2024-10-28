@@ -28,7 +28,8 @@ public class Cell {
         return isBomb;
     }
 
-    public void setBomb(boolean bomb) { isBomb = bomb; }
+    public void setBomb(boolean bomb) {
+        isBomb = bomb; }
 
 
     public int getLastOpenedBy() {
@@ -61,5 +62,6 @@ public class Cell {
         return number;
     }
 
-    public void setNumber(int number) {this.number = number;}
+    public void setNumber(int number) {
+        this.number = number;}
 }
