@@ -50,7 +50,15 @@ public class Board {
                     if (cell.isBomb()) {
                         System.out.print(textColors.ANSI_YELLOW + " * " + textColors.ANSI_RESET);
                     } else if (cell.getNumber() == 0) {
-                        System.out.print(textColors.ANSI_GREEN + " O " + textColors.ANSI_RESET);
+                        if (isTwoPlayer) {
+                            if (cell.getLastOpenedBy() == 1) {
+                                System.out.print(textColors.ANSI_BLUE + " 0 " + textColors.ANSI_RESET);
+                            }else {
+                                System.out.print(textColors.ANSI_PURPLE + " 0 " + textColors.ANSI_RESET);
+                            }
+                        }else {
+                            System.out.print(textColors.ANSI_GREEN + " O " + textColors.ANSI_RESET);
+                        }
                     } else {
                         System.out.print(" " + cell.getNumber() + " ");
 
