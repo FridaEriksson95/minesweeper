@@ -1,3 +1,8 @@
+package Game;
+
+import Board.Board;
+import Board.Cell;
+
 import java.util.Scanner;
 
 public class Game {
@@ -62,9 +67,9 @@ public class Game {
      * @return Returns true when move is made and false if a bomb is hit.
      */
 
-    //TODO lägg till  position.setLastOpenedBy(playerNumber);
+    //TODO add  position.setLastOpenedBy(playerNumber);
     public boolean playerMove(int playerNumber) {
-        Cell position;
+        Cell cell;
         while (true) {
             int x;
             int y;
@@ -92,8 +97,8 @@ public class Game {
                 x--;
                 y--;
                 if (board.withinBoundsOfGrid(x, y)) {
-                    position = board.getMinesweeper()[y][x];
-                    position.setLastOpenedBy(playerNumber);
+                    cell = board.getMinesweeper()[y][x];
+                    cell.setLastOpenedBy(playerNumber);
                     break;
                 } else {
                     System.out.println("The position you entered is not on the board.");
@@ -102,9 +107,9 @@ public class Game {
             System.out.println("Do you want to place a flag on this cell? yes/no:");
             String input = scanner.next();
             if (input.equalsIgnoreCase("yes")) {
-                if (!position.isOpen()) {
-                    if (!position.isFlagged()) {
-                        position.setFlagged(true);
+                if (!cell.isOpen()) {
+                    if (!cell.isFlagged()) {
+                        cell.setFlagged(true);
                         System.out.println("Flag placed on Column: " + (x + 1) + " Row: " + (y + 1) + ".");
                         board.printBoard(false);
                     } else {
@@ -114,15 +119,15 @@ public class Game {
                 }
             } else if (input.equalsIgnoreCase("no")) {
                 System.out.println("No flag placed on Row: " + (y + 1) + " Column: " + (x + 1) + ".");
-                if (position.isOpen()) {
+                if (cell.isOpen()) {
                     System.out.println("That cell is already open, try again.");
                 } else {
                     board.getMinesweeper()[y][x].setOpen(true);
-                    if (position.isBomb()) {
+                    if (cell.isBomb()) {
                         return false;
                     } else {
                         System.out.println("You opened Row: " + (y + 1) + " Column: " + (x + 1) + ".");
-                        if (position.getNumber() == 0) {
+                        if (cell.getNumber() == 0) {
                             board.openCellNearBy(x, y);
                         }
                         return true;
@@ -245,7 +250,7 @@ public class Game {
         if (input.equals("y") && !isTwoPlayer) {
             singlePlayer();
 
-        } else if (input.equalsIgnoreCase("y") && isTwoPlayer) {
+        } else if (input.equalsIgnoreCase("y")) {
             twoPlayerInit();
         } else {
             System.out.println("Thank you for playing!");

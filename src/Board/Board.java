@@ -1,3 +1,7 @@
+package Board;
+
+import Utilities.Colors;
+
 import java.util.ArrayList;
 import java.util.Random;
 

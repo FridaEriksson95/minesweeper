@@ -1,3 +1,7 @@
+package Game;
+import Utilities.Colors;
+import Utilities.InputHandler;
+
 public class Menu {
 
     public void menu(Game game) {
@@ -33,9 +37,9 @@ public class Menu {
 
     public void instructions() {
         System.out.println();
-        System.out.println(Colors.ANSI_BLUE + "Gameinstructions:");
+        System.out.println(Colors.ANSI_BLUE + "Game instructions:");
         System.out.println("The goal of the game is to open all of the cells without hitting a mine.");
-        System.out.println("Pick a row and a coloumn to place your move.");
+        System.out.println("Pick a row and a column to place your move.");
         System.out.println("If your move hits a mine, you loose.");
         System.out.println("If you manage to open all the cells without hitting a mine, you win!\n" + Colors.ANSI_RESET);
     }

@@ -1,3 +1,5 @@
+package Board;
+
 public class Cell {
     private boolean isOpen;
     private boolean isBomb;
