@@ -32,10 +32,7 @@ public class InputHandler {
             System.out.println("Invalid input, choose between " + min + " and " + max);
         }
     }
-
     public static String getNewString() {
         return scanner.nextLine();
     }
-
-
 }
