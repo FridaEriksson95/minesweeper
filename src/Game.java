@@ -54,19 +54,7 @@
                 board.printBoard(false);
                 System.out.println("You hit a bomb, game over!");
             }
-            System.out.println("Do you wish to play again? y/n");
-            String input = scanner.next().toLowerCase();
-
-            while (!input.equals("y") && !input.equals("n")) {
-                System.out.println("Invalid input. Enter 'y' to play again or 'n' to exit");
-                input = scanner.next().toLowerCase();
-            }
-            if (input.equals("y")) {
-                playGame();
-            } else {
-                System.out.println("Thank you for playing!");
-                System.exit(0);
-            }
+            resetGame(false);
         }
 
         /**
@@ -234,6 +222,7 @@
                     System.out.println(currentPlayer.getName() + " hit a bomb! ");
                     currentPlayer.setLoseCount(currentPlayer.getLoseCount() + 1);
                     printStats();
+                    resetGame(true);
                     break;
                 }
 
@@ -241,6 +230,7 @@
                     System.out.println("Congratulations " + currentPlayer.getName() + " Won!");
                     currentPlayer.setWinCount(currentPlayer.getWinCount() + 1);
                     printStats();
+                    resetGame(true);
                     break;
                 }
                 currentPlayer.points++;
@@ -266,5 +256,25 @@
                     playerTwo.getPoints());
 
             System.out.println("=====================================\n");
+        }
+        public void resetGame (boolean isTwoPlayer) {
+            System.out.println("Do you wish to play again? y/n");
+            String input = scanner.next().toLowerCase();
+
+            while (!input.equals("y") && !input.equals("n")) {
+                System.out.println("Invalid input. Enter 'y' to play again or 'n' to exit");
+                input = scanner.next().toLowerCase();
+            }
+            if (input.equals("y") && !isTwoPlayer) {
+                startGame();
+
+            }else if (input.equalsIgnoreCase("y") && isTwoPlayer) {
+                twoPlayerInit();
+            }
+            else {
+                System.out.println("Thank you for playing!");
+                System.exit(0);
+            }
+
         }
     }
