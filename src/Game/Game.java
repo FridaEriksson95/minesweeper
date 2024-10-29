@@ -14,8 +14,8 @@ public class Game {
     public Game() {
         this.board = new Board();
         this.scanner = new Scanner(System.in);
-        this.playerOne = new Player("Player 1", 1, "\u001B[34m");
-        this.playerTwo = new Player("Player 2", 2, "\u001B[35m");
+        this.playerOne = new Player("Player 1");
+        this.playerTwo = new Player("Player 2");
     }
 
     public void singlePlayer() {
@@ -67,7 +67,6 @@ public class Game {
      * @return Returns true when move is made and false if a bomb is hit.
      */
 
-    //TODO add  position.setLastOpenedBy(playerNumber);
     public boolean playerMove(int playerNumber) {
         Cell cell;
         while (true) {
@@ -104,6 +103,8 @@ public class Game {
                     System.out.println("The position you entered is not on the board.");
                 }
             }
+            //TODO Ska endas köras på singelplayer.
+
             System.out.println("Do you want to place a flag on this cell? yes/no:");
             String input = scanner.next();
             if (input.equalsIgnoreCase("yes")) {
