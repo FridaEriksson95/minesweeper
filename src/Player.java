@@ -12,10 +12,6 @@ public class Player {
         this.color = color;
     }
 
-    public String getColorMarker() {
-        return color + marker + "\u001B[0m";
-    }
-
     public int getWinCount() {
         return winCount;
     }

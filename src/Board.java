@@ -1,20 +1,13 @@
 import java.util.ArrayList;
 import java.util.Random;
 
-import static java.awt.SystemColor.text;
-
 public class Board {
-
     int size;
     int amountBombs;
-    /**
-     * Ta bort 10/10
-     */
     private Cell[][] minesweeper;
 
     //    Constructor
     public Board(int size, int amountBombs) {
-
         this.size = size;
         this.amountBombs = amountBombs;
 //  Create board
@@ -22,6 +15,9 @@ public class Board {
         generateBoard();
     }
 
+    /**
+     * method to call for to bring in colors in the game
+     */
     public class textColors {
         public static final String ANSI_RESET = "\u001B[0m";
         public static final String ANSI_RED = "\u001B[31m";
@@ -43,10 +39,12 @@ public class Board {
             } else {
                 System.out.print(i + 1 + "");
             }
+            //TODO vid två spelare och man öppnar en cell så placeras både en blå och en lila 0 ut, fast bara en spelare kört
+            // och öppnar nästa en cell som öppnats av celler nearby så blir alla öppnade celler gröna
+            //ska man kunna köra på en flagga? allt blir grönt efter man flaggat
             for (int j = 0; j < minesweeper.length; j++) {
                 Cell cell = minesweeper[i][j];
                 if (cell.isOpen()) {
-                    // Show * for bombs, O for open cell and _ for hidden
                     if (cell.isBomb()) {
                         System.out.print(textColors.ANSI_YELLOW + " * " + textColors.ANSI_RESET);
                     } else if (cell.getNumber() == 0) {
@@ -77,11 +75,9 @@ public class Board {
 
     /**
      * Randomly places bombs on the Minesweeper board.
-     * <p>
      * - A random row and column are selected for each bomb placement.
      * - The method ensures that the same cell is not selected twice by checking if the cell already contains a bomb.
      * - The process continues until the specified number of bombs in amountBombs chosen by user is placed.
-     * <p>
      * param "amountBombs" Number of bombs to be placed on the board.
      * param "size" Size of the board, both width and height.
      */
@@ -175,12 +171,10 @@ public class Board {
                 }
             }
         }
-
     }
 
     /**
      * Checks if a position exists on the board.
-     *
      * @param x x-coordinate
      * @param y y-coordinate
      * @return Returns true if position is within bounds.
