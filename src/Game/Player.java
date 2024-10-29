@@ -5,13 +5,10 @@ public class Player {
     private int loseCount;
     private int points;
     private String name;
-    private int marker;
-    private String color;
 
-    public Player(String name, int marker, String color) {
+
+    public Player(String name) {
         this.name = name;
-        this.marker = marker;
-        this.color = color;
     }
 
     public void resetScore() {
