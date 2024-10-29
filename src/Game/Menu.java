@@ -1,3 +1,7 @@
+package Game;
+import Utilities.Colors;
+import Utilities.InputHandler;
+
 public class Menu {
 
     /**
@@ -6,7 +10,6 @@ public class Menu {
      */
     public void menu(Game game) {
         int choice = -1;
-
         while (choice == -1) {
             System.out.println("Let's clear some bombs in this Minesweeper game!");
             System.out.println("What would you like to do?");
@@ -15,12 +18,10 @@ public class Menu {
             System.out.println(Board.textColors.ANSI_BLUE + "3. Game instructions" + Board.textColors.ANSI_RESET);
             System.out.println(Board.textColors.ANSI_RED + "4. Exit" + Board.textColors.ANSI_RESET);
             System.out.println("Your choice: ");
-
             choice = InputHandler.getNewIntInRange(1, 4);
-
             switch (choice) {
                 case 1:
-                    game.startGame();
+                    game.singlePlayer();
                     break;
                 case 2:
                     game.twoPlayerInit();
