@@ -43,6 +43,9 @@ public class Board {
             } else {
                 System.out.print(i + 1 + "");
             }
+            //TODO vid två spelare och man öppnar en cell så placeras både en blå och en lila 0 ut, fast bara en spelare kört
+            // och öppnar nästa en cell som öppnats av celler nearby så blir alla öppnade celler gröna
+            //ska man kunna köra på en flagga? allt blir grönt efter man flaggat
             for (int j = 0; j < minesweeper.length; j++) {
                 Cell cell = minesweeper[i][j];
                 if (cell.isOpen()) {
@@ -87,11 +90,9 @@ public class Board {
 
     /**
      * Randomly places bombs on the Minesweeper board.
-     * <p>
      * - A random row and column are selected for each bomb placement.
      * - The method ensures that the same cell is not selected twice by checking if the cell already contains a bomb.
      * - The process continues until the specified number of bombs in amountBombs chosen by user is placed.
-     * <p>
      * param "amountBombs" Number of bombs to be placed on the board.
      * param "size" Size of the board, both width and height.
      */
@@ -139,7 +140,6 @@ public class Board {
 
     /**
      * Checks if a position exists on the board.
-     *
      * @param x x-coordinate
      * @param y y-coordinate
      * @return Returns true if position is within bounds.

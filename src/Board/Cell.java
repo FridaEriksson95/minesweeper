@@ -40,10 +40,8 @@ public class Cell {
 
     /**
      * Represents the flagged status of the cell.
-     * <p>
      * - `isFlagged`: Indicates whether the player has flagged the cell
      * as potentially containing a bomb.
-     * <p>
      * Getters and setters:
      * - `isFlagged()`: Returns the current flagged status.
      * - `setFlagged()`: Sets the flagged status of the cell.
