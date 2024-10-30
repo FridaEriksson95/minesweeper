@@ -39,6 +39,9 @@ public class Menu {
         }
     }
 
+    /**
+     * Method for instructions
+     */
     public void instructions() {
         System.out.println();
         System.out.println(Colors.ANSI_BLUE + "Game instructions for 1 player:" + Colors.ANSI_RESET);

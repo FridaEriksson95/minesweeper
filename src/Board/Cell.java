@@ -1,5 +1,9 @@
 package Board;
 
+/**
+ * Cell class
+ * Logic/functionality is found
+ */
 public class Cell {
     private boolean isOpen;
     private boolean isBomb;

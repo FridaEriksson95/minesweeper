@@ -4,6 +4,10 @@ import Board.Board;
 import Board.Cell;
 import Utilities.InputHandler;
 
+/**
+ * Game class
+ * Logic/Functionality
+ */
 
 public class Game {
     private final Board board;
@@ -34,6 +38,10 @@ public class Game {
         int mines = InputHandler.getNewIntInRange(1, size * size - 1, "mine amount");
         board.setBoard(size, mines);
     }
+
+    /**
+     * Method that checks if game is won/loss/over
+     */
 
     public void playGame() {
         do {
@@ -167,6 +175,10 @@ public class Game {
         }
     }
 
+    /**
+     * Method that prints out scoreboard
+     */
+
     public void printStats() {
         System.out.println("\n========= Player Statistics =========");
         System.out.printf("%-15s | %-6s | %-7s | %-6s %n", "Player", "Wins", "Losses", "Points");
@@ -187,6 +199,11 @@ public class Game {
         System.out.println("=====================================\n");
     }
 
+
+    /**
+     * Method that reset game
+     * @param isTwoPlayer, checks if reset game is single/multiplayer
+     */
     public void resetGame(boolean isTwoPlayer) {
 
         boolean playAgain = InputHandler.getYesOrNo("Do you want to play again?");

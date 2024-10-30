@@ -1,5 +1,10 @@
 package Game;
 
+/**
+ * Player class
+ * Logic/functionality
+ */
+
 public class Player {
     private int winCount;
     private int loseCount;

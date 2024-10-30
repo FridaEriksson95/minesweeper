@@ -2,10 +2,22 @@ package Utilities;
 
 import java.util.Scanner;
 
+/**
+ * InputHandler class
+ * Handles games scanner inputs
+ */
 public class InputHandler {
 
     private static final Scanner scanner = new Scanner(System.in);
 
+    /**
+     * Method that gives a range
+     * Can be called everywhere
+     * @param min sets a min value in range
+     * @param max sets a max value in range
+     * @param sub is used to be able to change minor text differences
+     * @return a int
+     */
     public static int getNewIntInRange(int min, int max, String sub) {
         while(true){
             while (!scanner.hasNextInt()) {
@@ -23,6 +35,12 @@ public class InputHandler {
         }
     }
 
+    /**
+     * Methods that checks if user input is yes/no
+     * @param question is used so other can write a question to yes/no answer
+     * @return a boolean, whether its true/false
+     */
+
     public static boolean getYesOrNo(String question) {
         while(true){
             System.out.println(question + " yes/no");
@@ -38,6 +56,10 @@ public class InputHandler {
         }
     }
 
+    /**
+     * Method is called in other classes
+     * @return a String input
+     */
     public static String getNewString() {
         return scanner.nextLine();
     }
