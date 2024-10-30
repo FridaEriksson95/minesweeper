@@ -2,18 +2,19 @@ package Game;
 
 import Board.Board;
 import Board.Cell;
+import Utilities.InputHandler;
 
 import java.util.Scanner;
 
 public class Game {
     private final Board board;
-    private final Scanner scanner;
+//    private final Scanner scanner;
     private final Player playerOne, playerTwo;
     private Player currentPlayer;
 
     public Game() {
         this.board = new Board();
-        this.scanner = new Scanner(System.in);
+//        this.scanner = new Scanner(System.in);
         this.playerOne = new Player("Player 1");
         this.playerTwo = new Player("Player 2");
     }
@@ -24,23 +25,13 @@ public class Game {
     }
 
     private void setupBoard() {
-        int size = 0;
-        int bombs = 0;
-        while (size < 3 || size > 20) {
-            System.out.println("Choose board size (3-20): ");
-            size = scanner.nextInt();
-            if (size < 3 || size > 20) {
-                System.out.println("Invalid input. Choose a size between 3-20.");
-            }
-        }
-        while (bombs < 1 || bombs >= (size * size)) {
-            System.out.println("Choose amount of mines (1-" + (size * size - 1) + "): ");
-            bombs = scanner.nextInt();
-            if (bombs < 1 || bombs >= (size * size)) {
-                System.out.println("Invalid input. Choose a  number between 1-" + (size * size - 1) + ".");
-            }
-        }
-        board.setBoard(size, bombs);
+
+        System.out.println("Choose a board size (3-20): ");
+        int size = InputHandler.getNewIntInRange(3,20,"board size");
+
+        System.out.println("Choose amount of mines (1-" + (size * size - 1) + "): ");
+        int mines = InputHandler.getNewIntInRange(1, size * size -1, "mine amount");
+        board.setBoard(size, mines);
     }
 
     public void playGame() {
@@ -72,42 +63,18 @@ public class Game {
         while (true) {
             int x;
             int y;
-            while (true) {
-                while (true) {
-                    System.out.println("Enter a row:");
-                    if (scanner.hasNextInt()) {
-                        y = scanner.nextInt();
-                        break;
-                    } else {
-                        System.out.println("You need to enter a number, try again.");
-                        scanner.next();
-                    }
-                }
-                while (true) {
-                    System.out.println("Enter a column:");
-                    if (scanner.hasNextInt()) {
-                        x = scanner.nextInt();
-                        break;
-                    } else {
-                        System.out.println("You need to enter a number, try again.");
-                        scanner.next();
-                    }
-                }
-                x--;
-                y--;
-                if (board.withinBoundsOfGrid(x, y)) {
-                    cell = board.getMinesweeper()[y][x];
-                    cell.setLastOpenedBy(playerNumber);
-                    break;
-                } else {
-                    System.out.println("The position you entered is not on the board.");
-                }
-            }
-            //TODO Ska endas köras på singelplayer.
 
-            System.out.println("Do you want to place a flag on this cell? yes/no:");
-            String input = scanner.next();
-            if (input.equalsIgnoreCase("yes")) {
+            System.out.println("Enter a row:");
+            y = InputHandler.getNewIntInRange(1, board.getSize(), "row") - 1;
+
+            System.out.println("Enter a column:");
+            x = InputHandler.getNewIntInRange(1, board.getSize(), "column") - 1;
+
+            cell = board.getMinesweeper()[y][x];
+            cell.setLastOpenedBy(playerNumber);
+
+            boolean placeFlag = InputHandler.getYesOrNo("Do you want to place a flag on this cell? ");
+            if (placeFlag) {
                 if (!cell.isOpen()) {
                     if (!cell.isFlagged()) {
                         cell.setFlagged(true);
@@ -117,13 +84,15 @@ public class Game {
                         System.out.println("This cell already contains a flag. Try again.");
                         board.printBoard(false);
                     }
+                } else {
+                    System.out.println("Cannot place a flag on an open cell. Try again.");
                 }
-            } else if (input.equalsIgnoreCase("no")) {
+            } else {
                 System.out.println("No flag placed on Row: " + (y + 1) + " Column: " + (x + 1) + ".");
                 if (cell.isOpen()) {
                     System.out.println("That cell is already open, try again.");
                 } else {
-                    board.getMinesweeper()[y][x].setOpen(true);
+                    cell.setOpen(true);
                     if (cell.isBomb()) {
                         return false;
                     } else {
@@ -135,8 +104,6 @@ public class Game {
                     }
                 }
                 board.printBoard(false);
-            } else {
-                System.out.println("Invalid input. Please enter yes or no.");
             }
         }
     }
@@ -148,38 +115,15 @@ public class Game {
         playerOne.resetScore();
         playerTwo.resetScore();
         System.out.println("Player: 1 enter name");
-        String playerOneName = getNextString();
+        String playerOneName = InputHandler.getNewString();
         playerOne.setName(playerOneName);
         System.out.println("Player: 2 enter name ");
-        String playerTwoName = getNextString();
+        String playerTwoName = InputHandler.getNewString();
         playerTwo.setName(playerTwoName);
         System.out.println(playerOneName + " and " + playerTwoName + ", let's go!");
         startGameTp();
     }
 
-    /**
-     * Method to handle input
-     *
-     * @return a String
-     */
-    public String getNextString() {
-        while (true) {
-            boolean isValid = true;
-            if (scanner.hasNext()) {
-                String string = scanner.next();
-                for (int i = 0; i < string.length(); i++) {
-                    if (!Character.isLetter(string.charAt(i))) {
-                        isValid = false;
-                        System.out.println("Not a valid name, please use only letters.");
-                        break;
-                    }
-                }
-                if (isValid) {
-                    return string;
-                }
-            }
-        }
-    }
 
     /**
      * Method to start the twoPlayerMode
@@ -242,22 +186,17 @@ public class Game {
     }
 
     public void resetGame(boolean isTwoPlayer) {
-        System.out.println("Do you wish to play again? y/n");
-        String input = scanner.next().toLowerCase();
 
-        while (!input.equals("y") && !input.equals("n")) {
-            System.out.println("Invalid input. Enter 'y' to play again or 'n' to exit");
-            input = scanner.next().toLowerCase();
-        }
-        if (input.equals("y") && !isTwoPlayer) {
-            singlePlayer();
+    boolean playAgain = InputHandler.getYesOrNo("Do you want to play again?");
 
-        } else if (input.equalsIgnoreCase("y")) {
-            twoPlayerInit();
-        } else {
-            System.out.println("Thank you for playing!");
-            System.exit(0);
-        }
+    if (playAgain && !isTwoPlayer) {
+        singlePlayer();
+    } else if (playAgain) {
+        twoPlayerInit();
+    } else {
+        System.out.println("Thanks for playing!");
+        System.exit(0);
+    }
 
     }
 }

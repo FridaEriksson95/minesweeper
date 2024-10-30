@@ -19,7 +19,7 @@ public class Menu {
             System.out.println(Colors.ANSI_BLUE + "3. Game instructions" + Colors.ANSI_RESET);
             System.out.println(Colors.ANSI_RED + "4. Exit" + Colors.ANSI_RESET);
             System.out.println("Your choice: ");
-            choice = InputHandler.getNewIntInRange(1, 4);
+            choice = InputHandler.getNewIntInRange(1, 4, "list number");
             switch (choice) {
                 case 1:
                     game.singlePlayer();
