@@ -5,7 +5,8 @@ import Utilities.InputHandler;
 public class Menu {
 
     /**
-     *  menu with 4 choices for the player.
+     * menu with 4 choices for the player.
+     *
      * @param game
      */
     public void menu(Game game) {
@@ -13,12 +14,12 @@ public class Menu {
         while (choice == -1) {
             System.out.println("Let's clear some bombs in this Minesweeper game!");
             System.out.println("What would you like to do?");
-            System.out.println(Colors.ANSI_GREEN +  "1. Start game" + Colors.ANSI_RESET);
+            System.out.println(Colors.ANSI_GREEN + "1. Start game" + Colors.ANSI_RESET);
             System.out.println(Colors.ANSI_YELLOW + "2. Start game with two players" + Colors.ANSI_RESET);
             System.out.println(Colors.ANSI_BLUE + "3. Game instructions" + Colors.ANSI_RESET);
             System.out.println(Colors.ANSI_RED + "4. Exit" + Colors.ANSI_RESET);
             System.out.println("Your choice: ");
-            choice = InputHandler.getNewIntInRange(1, 4);
+            choice = InputHandler.getNewIntInRange(1, 4, "list number");
             switch (choice) {
                 case 1:
                     game.singlePlayer();
@@ -37,13 +38,15 @@ public class Menu {
             }
         }
     }
-//TODO uppdatera instructions med två spelare - how to play
+
+    //TODO uppdatera instructions med två spelare - how to play
     public void instructions() {
         System.out.println();
         System.out.println(Colors.ANSI_BLUE + "Game instructions:" + Colors.ANSI_RESET);
         System.out.println(Colors.ANSI_YELLOW + "The goal of the game is to open all of the cells without hitting a bomb.");
-        System.out.println("Pick a row and a coloumn to place your move.");
-        System.out.println("If your move hits a bomb, you loose.");
-        System.out.println("If you manage to open all the cells without hitting a bomb, you win!\n" + Colors.ANSI_RESET);
-            }
-        }
+        System.out.println("Two players take turns picking a row and column to open a cell.");
+        System.out.println("If a player hits a bomb, they lose, and the other player wins.");
+        System.out.println("If a player successfully opens a cell without hitting a bomb, their turn is complete, and the other player goes.");
+        System.out.println("If all cells are opened without hitting a bomb, both players win!" + Colors.ANSI_RESET);
+    }
+}

@@ -4,24 +4,13 @@ import java.util.Scanner;
 
 public class InputHandler {
 
-    static Scanner scanner = new Scanner(System.in);
+    private static Scanner scanner = new Scanner(System.in);
 
-    //TODO används denna?
-    public static int getNewInt() {
-        while(!scanner.hasNextInt()) {
-            System.out.println("Invalid input, choose 1-4");
-            scanner.nextLine();
-        }
-
-        int i = scanner.nextInt();
-        scanner.nextLine();
-        return i;
-    }
-
-    public static int getNewIntInRange(int min, int max) {
+    public static int getNewIntInRange(int min, int max, String sub) {
         while(true){
             while (!scanner.hasNextInt()) {
-                System.out.println("Invalid input, choose between " + min + " and " + max + ". Try again: ");
+//                If string is inserted
+                System.out.println("String is not a number, choose a " + sub + " between " + min + " and " + max +":");
                 scanner.nextLine();
             }
 
@@ -30,13 +19,55 @@ public class InputHandler {
             if (i >= min && i <= max) {
                 return i;
             }
-
-            System.out.println("Invalid input, choose between " + min + " and " + max + ": ");
+            System.out.println("Number input out of range, choose a " + sub + " between " + min + " and " + max +":+++");
         }
     }
 
-    //TODO vart används denna?
+    public static boolean getYesOrNo(String question) {
+        while(true){
+            System.out.println(question + " yes/no");
+            String input = scanner.nextLine().trim().toLowerCase();
+
+            if(input.equals("yes") || input.equals("y")) {
+                return true;
+            } else if(input.equals("no") || input.equals("n")) {
+                return false;
+            } else {
+                System.out.println("Invalid input, must choose either yes/no");
+            }
+        }
+    }
+
     public static String getNewString() {
         return scanner.nextLine();
     }
+
+
+    /**
+     * Method to handle input
+     *
+     * @return a String
+     */
+    public static String getNextString() {
+        while (true) {
+            boolean isValid = true;
+            if (scanner.hasNext()) {
+                String string = scanner.next();
+                for (int i = 0; i < string.length(); i++) {
+                    if (!Character.isLetter(string.charAt(i))) {
+                        isValid = false;
+                        System.out.println("Not a valid name, please use only letters.");
+                        break;
+                    }
+                }
+                if (isValid) {
+                    return string;
+                }
+            }
+        }
+    }
 }
+
+/*
+
+ */
