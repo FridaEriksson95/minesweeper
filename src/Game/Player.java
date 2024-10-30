@@ -7,18 +7,18 @@ package Game;
 
 public class Player {
     private int winCount;
-    private int loseCount;
-    private int points;
+    private int score;
     private String name;
+    private String color;
 
 
-    public Player(String name) {
+    public Player(String name, String color) {
         this.name = name;
+        this.color = color;
     }
 
-    public void resetScore() {
-        this.points = 0;
-        this.loseCount = 0;
+    public void resetPlayerStatistics(){
+        this.score = 0;
         this.winCount = 0;
     }
 
@@ -30,27 +30,27 @@ public class Player {
         this.winCount = winCount;
     }
 
-    public int getLoseCount() {
-        return loseCount;
+    public int getScore() {
+        return score;
     }
 
-    public void setLoseCount(int loseCount) {
-        this.loseCount = loseCount;
-    }
-
-    public int getPoints() {
-        return points;
+    public void setScore(int score) {
+        this.score = score;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setPoints(int points) {
-        this.points = points;
-    }
-
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 }

@@ -1,14 +1,8 @@
 package Board;
 
 import Utilities.Colors;
-
 import java.util.ArrayList;
 import java.util.Random;
-
-/**
- * Class Board
- * Board logic/functionality
- */
 
 public class Board {
     private int size, amountBombs;
@@ -17,19 +11,12 @@ public class Board {
     public Board() {
         this.size = 10;
         this.amountBombs = 10;
+
         generateBoard();
     }
 
-    /**
-     * Helper class to store a pair of offset ints, to be used to get a coordinate relative to origin coordinate.
-     *
-     * @param xOffset
-     * @param yOffset
-     */
     private record OffsetCoordinate(int xOffset, int yOffset) {
-        /**
-         * @return Returns a list of OffsetCoordinate for all adjacent coordinates.
-         */
+
         private static ArrayList<OffsetCoordinate> getSurroundingCellsOffsets() {
             ArrayList<OffsetCoordinate> offsets = new ArrayList<>();
             offsets.add(new OffsetCoordinate(1, 0)); //Right
@@ -44,11 +31,7 @@ public class Board {
         }
     }
 
-    /**
-     * Method to print board
-     */
-
-    public void printBoard(boolean isTwoPlayer) {
+    public void printBoard() {
         System.out.print("    ");
         for (int i = 1; i <= minesweeper.length; i++) {
             System.out.printf("%-2d ", i);
@@ -65,23 +48,16 @@ public class Board {
                 if (cell.isOpen()) {
                     if (cell.isBomb()) {
                         System.out.print(Colors.ANSI_YELLOW + " * " + Colors.ANSI_RESET);
-                    } else if (cell.getNumber() == 0) {
-                        if (isTwoPlayer) {
-                            if (cell.getLastOpenedBy() == 1) {
-                                System.out.print(Colors.ANSI_BLUE + " 0 " + Colors.ANSI_RESET);
-                            } else {
-                                System.out.print(Colors.ANSI_PURPLE + " 0 " + Colors.ANSI_RESET);
-                            }
-                        } else {
-                            System.out.print(Colors.ANSI_GREEN + " O " + Colors.ANSI_RESET);
-                        }
-                    } else {
+                    }
+                    else if (cell.getNumber() == 0) {
+                        System.out.print(cell.getLastOpenedBy().getColor() + " O " + Colors.ANSI_RESET);
+                    }
+                    else {
                         System.out.print(" " + cell.getNumber() + " ");
-
                     }
                 } else {
                     if (cell.isFlagged()) {
-                        System.out.print(Colors.ANSI_RED + " F " + Colors.ANSI_RESET);
+                        System.out.print(Colors.ANSI_PURPLE + " F " + Colors.ANSI_RESET);
                     } else {
                         System.out.print(" _ ");
                     }
@@ -91,12 +67,7 @@ public class Board {
         }
     }
 
-    /**
-     * Method to generate board
-     * Calls 2 other methods.
-     */
-
-    private void generateBoard() {
+    public void generateBoard() {
         this.minesweeper = new Cell[size][size];
         for (int i = 0; i < minesweeper.length; i++) {
             for (int j = 0; j < minesweeper.length; j++) {
@@ -150,6 +121,7 @@ public class Board {
     /**
      * Method to check if there is a win or not
      * checks if all board cells are open
+     *
      * @return a boolean (true/false)
      */
 
@@ -180,6 +152,7 @@ public class Board {
     /**
      * Opens up all adjacent Cells that are not bombs at a given coordinate on the board. Runs itself again on adjacent Cell
      * if the Cell's number is 0. To be used on each move.
+     *
      * @param x origin x-coordinate
      * @param y origin y-coordinate
      */
@@ -198,6 +171,14 @@ public class Board {
                         openCellNearBy(surroundingRow, surroundingColumn);
                     }
                 }
+            }
+        }
+    }
+
+    public void openAllCells(){
+        for (int i = 0; i<size; i++) {
+            for (int j = 0; j<size; j++) {
+                minesweeper[i][j].setOpen(true);
             }
         }
     }

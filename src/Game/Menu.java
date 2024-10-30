@@ -1,15 +1,16 @@
 package Game;
+
 import Utilities.Colors;
 import Utilities.InputHandler;
 
 public class Menu {
+    private final Game game;
 
-    /**
-     * menu with 4 choices for the player.
-     *
-     * @param game
-     */
-    public void menu(Game game) {
+    public Menu(Game game) {
+        this.game = game;
+    }
+
+    public void mainMenu() {
         int choice = -1;
         while (choice == -1) {
             System.out.println("Let's clear some bombs in this Minesweeper game!");
@@ -22,14 +23,13 @@ public class Menu {
             choice = InputHandler.getNewIntInRange(1, 4, "list number");
             switch (choice) {
                 case 1:
-                    game.singlePlayer();
+                    game.setSinglePlayer(true);
                     break;
                 case 2:
-                    game.twoPlayerInit();
+                    game.setSinglePlayer(false);
                     break;
                 case 3:
                     instructions();
-                    menu(game);
                     break;
                 case 4:
                     System.out.println("Thanks for playing, exiting...");

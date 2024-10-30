@@ -1,5 +1,8 @@
 package Board;
 
+import Game.Player;
+import Utilities.Colors;
+
 /**
  * Cell class
  * Logic/functionality is found
@@ -7,7 +10,7 @@ package Board;
 public class Cell {
     private boolean isOpen;
     private boolean isBomb;
-    private int lastOpenedBy;
+    private Player lastOpenedBy;
     private boolean isFlagged;
     private int number;
 
@@ -16,6 +19,7 @@ public class Cell {
         this.isOpen = false;
         this.isBomb = false;
         this.number = 0;
+        this.lastOpenedBy = new Player("Placeholder", Colors.ANSI_GREEN);
     }
 
     public boolean isOpen() {
@@ -34,11 +38,11 @@ public class Cell {
         isBomb = bomb;
     }
 
-    public int getLastOpenedBy() {
+    public Player getLastOpenedBy() {
         return lastOpenedBy;
     }
 
-    public void setLastOpenedBy(int lastOpenedBy) {
+    public void setLastOpenedBy(Player lastOpenedBy) {
         this.lastOpenedBy = lastOpenedBy;
     }
 

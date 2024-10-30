@@ -55,38 +55,8 @@ public class InputHandler {
             }
         }
     }
-
-    /**
-     * Method is called in other classes
-     * @return a String input
-     */
     public static String getNewString() {
         return scanner.nextLine();
-    }
-
-
-    /**
-     * Method to handle input
-     *
-     * @return a String
-     */
-    public static String getNextString() {
-        while (true) {
-            boolean isValid = true;
-            if (scanner.hasNext()) {
-                String string = scanner.next();
-                for (int i = 0; i < string.length(); i++) {
-                    if (!Character.isLetter(string.charAt(i))) {
-                        isValid = false;
-                        System.out.println("Not a valid name, please use only letters.");
-                        break;
-                    }
-                }
-                if (isValid) {
-                    return string;
-                }
-            }
-        }
     }
 }
 

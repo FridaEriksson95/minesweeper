@@ -1,36 +1,55 @@
 package Game;
 
 import Board.Board;
-import Board.Cell;
+import Utilities.Colors;
 import Utilities.InputHandler;
-
-/**
- * Game class
- * Logic/Functionality
- */
+import Board.Cell;
 
 public class Game {
     private final Board board;
-    private final Player playerOne, playerTwo;
+    private boolean singlePlayer;
+    private final Player p1, p2;
     private Player currentPlayer;
+    private boolean newGame;
+    private final Menu menu;
 
     public Game() {
         this.board = new Board();
-        this.playerOne = new Player("Player 1");
-        this.playerTwo = new Player("Player 2");
+        this.p1 = new Player("Player", Colors.ANSI_GREEN);
+        this.p2 = new Player("Player 2", Colors.ANSI_BLUE);
+        this.currentPlayer = p1;
+        this.newGame = true;
+        this.menu = new Menu(this);
+        this.singlePlayer = true;
     }
 
-    /**
-     * Starts a single player game.
-     */
-    public void singlePlayer() {
-        setupBoard();
-        playGame();
+    public void run() {
+        do {
+            if (newGame) {
+                p1.setColor(Colors.ANSI_GREEN);
+                menu.mainMenu();
+                if (!singlePlayer) {
+                    p1.setColor(Colors.ANSI_RED);
+                    setupTwoPlayers();
+                }
+            }
+            setupBoard();
+            p1.setScore(0);
+            p2.setScore(0);
+            do {
+                board.printBoard();
+                switchCurrentPlayer();
+            }
+            while (placeMarker() && !board.checkWin());
+            System.out.println(board.checkWin() ? currentPlayer.getName() + " won!" : currentPlayer.getName() + "hit a bomb! Game over!");
+            currentPlayer.setWinCount(currentPlayer.getWinCount() + 1);
+            if (!singlePlayer) {
+                printStats();
+            }
+        }
+        while (playAgain());
     }
 
-    /**
-     * Asks the player to choose board size and amount of mines.
-     */
     private void setupBoard() {
         System.out.println("Choose a board size (3-20): ");
         int size = InputHandler.getNewIntInRange(3, 20, "board size");
@@ -39,183 +58,102 @@ public class Game {
         board.setBoard(size, mines);
     }
 
-    /**
-     * Method that checks if game is won/loss/over
-     */
-
-    public void playGame() {
-        do {
-            board.printBoard(false);
-        } while (!board.checkWin() && playerMove(0));
-        if (board.checkWin()) {
-            System.out.println("Congratulations, you won!");
-        } else {
-            for (int i = 0; i < board.getSize(); i++) {
-                for (int j = 0; j < board.getSize(); j++) {
-                    board.getMinesweeper()[i][j].setOpen(true);
-                }
-            }
-            board.printBoard(false);
-            System.out.println("You hit a bomb, game over!");
-        }
-        resetGame(false);
+    public void setupTwoPlayers() {
+        p1.resetPlayerStatistics();
+        p2.resetPlayerStatistics();
+        System.out.println("Player: 1 enter name");
+        String p1Name = InputHandler.getNewString();
+        p1.setName(p1Name);
+        System.out.println("Player: 2 enter name ");
+        String p2Name = InputHandler.getNewString();
+        p2.setName(p2Name);
+        System.out.println(p1Name + " and " + p2Name + ", let's go!");
     }
 
-    /**
-     * Asks the player to enter a position on the board to try to open up.
-     * @param playerNumber 0 = singlePlayer,
-     *                     1 = player1 in multiplayer,
-     *                     2 = player2 in multiplayer
-     * @return Returns true as long as the cell opened is not a bomb.
-     */
-    public boolean playerMove(int playerNumber) {
+    public boolean placeMarker() {
         Cell cell;
         while (true) {
+            boolean flagging = true;
             int x;
             int y;
-
-            System.out.println("Enter a row:");
-            y = InputHandler.getNewIntInRange(1, board.getSize(), "row") - 1;
-
-            System.out.println("Enter a column:");
-            x = InputHandler.getNewIntInRange(1, board.getSize(), "column") - 1;
-
+            do {
+                System.out.println(currentPlayer.getName() + ", place a marker!");
+                System.out.println("Enter a row:");
+                y = InputHandler.getNewIntInRange(1, board.getSize(), "row") - 1;
+                System.out.println("Enter a column:");
+                x = InputHandler.getNewIntInRange(1, board.getSize(), "column") - 1;
+                if (singlePlayer) {
+                    flagging = placeFlag(x, y);
+                }
+            }
+            while (flagging && singlePlayer);
             cell = board.getMinesweeper()[y][x];
-            cell.setLastOpenedBy(playerNumber);
-
-            boolean placeFlag = InputHandler.getYesOrNo("Do you want to place a flag on this cell? ");
-            if (placeFlag) {
-                if (!cell.isOpen()) {
-                    if (!cell.isFlagged()) {
-                        cell.setFlagged(true);
-                        System.out.println("Flag placed on Column: " + (x + 1) + " Row: " + (y + 1) + ".");
-                        board.printBoard(false);
-                    } else {
-                        System.out.println("This cell already contains a flag. Try again.");
-                        board.printBoard(false);
-                    }
-                } else {
-                    System.out.println("Cannot place a flag on an open cell. Try again.");
-                }
+            if (cell.isOpen()) {
+                System.out.println("That cell is already open, try again.");
             } else {
-                System.out.println("No flag placed on Row: " + (y + 1) + " Column: " + (x + 1) + ".");
-                if (cell.isOpen()) {
-                    System.out.println("That cell is already open, try again.");
-                } else {
-                    if (cell.getNumber() == 0) {
-                        board.openCellNearBy(x, y);
-                    }
+                if (cell.getNumber() == 0) {
+                    board.openCellNearBy(x, y);
+                }
+                if (!cell.isBomb()) {
                     cell.setOpen(true);
-                    if (cell.isBomb()) {
-                        return false;
-                    } else {
-                        System.out.println("You opened Row: " + (y + 1) + " Column: " + (x + 1) + ".");
-                        return true;
-                    }
+                    cell.setLastOpenedBy(currentPlayer);
+                    currentPlayer.setScore(currentPlayer.getScore() + 1);
+                    System.out.println("You opened Row: " + (y + 1) + " Column: " + (x + 1) + ".");
+                    return true;
+                } else {
+                    board.openAllCells();
+                    board.printBoard();
+                    switchCurrentPlayer();
+                    return false;
                 }
-                board.printBoard(false);
             }
         }
     }
 
-    /**
-     * Method to Create player one and two.
-     */
-    public void twoPlayerInit() {
-        playerOne.resetScore();
-        playerTwo.resetScore();
-        System.out.println("Player: 1 enter name");
-        String playerOneName = InputHandler.getNewString();
-        playerOne.setName(playerOneName);
-        System.out.println("Player: 2 enter name ");
-        String playerTwoName = InputHandler.getNewString();
-        playerTwo.setName(playerTwoName);
-        System.out.println(playerOneName + " and " + playerTwoName + ", let's go!");
-        startGameTp();
-    }
-
-
-    /**
-     * Method to start the twoPlayerMode
-     */
-    public void startGameTp() {
-        setupBoard();
-        currentPlayer = playerOne;
-        playGameTp();
-    }
-
-    public void playGameTp() {
-        while (!board.checkWin()) {
-            board.printBoard(true);
-            System.out.println(currentPlayer.getName() + "'s turn!");
-
-            if (!playerMove(currentPlayer == playerOne ? 1 : 2)) {
-                for (int i = 0; i < board.getSize(); i++) {
-                    for (int j = 0; j < board.getSize(); j++) {
-                        board.getMinesweeper()[i][j].setOpen(true);
-                    }
-                }
-                board.printBoard(true);
-                System.out.println(currentPlayer.getName() + " hit a bomb! ");
-                currentPlayer.setLoseCount(currentPlayer.getLoseCount() + 1);
-                printStats();
-                resetGame(true);
-                break;
-            }
-
-            if (board.checkWin()) {
-                System.out.println("Congratulations " + currentPlayer.getName() + " Won!");
-                currentPlayer.setWinCount(currentPlayer.getWinCount() + 1);
-                printStats();
-                resetGame(true);
-                break;
-            }
-            currentPlayer.setPoints(currentPlayer.getPoints() + 1);
-            currentPlayer = (currentPlayer == playerOne) ? playerTwo : playerOne;
+    public boolean placeFlag(int x, int y) {
+        if (InputHandler.getYesOrNo("Place flag?")) {
+            board.getMinesweeper()[y][x].setFlagged(true);
+            board.printBoard();
+            System.out.println("You flagged Row: " + x + " Column: " + y);
+            return true;
         }
+        return false;
     }
 
-    /**
-     * Method that prints out scoreboard
-     */
+
+    private void switchCurrentPlayer() {
+        currentPlayer = singlePlayer ? currentPlayer : (currentPlayer.equals(p1) ? p2 : p1);
+    }
 
     public void printStats() {
         System.out.println("\n========= Player Statistics =========");
-        System.out.printf("%-15s | %-6s | %-7s | %-6s %n", "Player", "Wins", "Losses", "Points");
+        System.out.printf("%-15s | %-6s | %-6s %n", "Player", "Wins", "Points");
         System.out.println("-------------------------------------");
 
-        System.out.printf("%-15s | %-6d | %-7d | %-6d %n",
-                playerOne.getName(),
-                playerOne.getWinCount(),
-                playerOne.getLoseCount(),
-                playerOne.getPoints());
+        System.out.printf("%-15s | %-6d | %-6d %n",
+                p1.getName(),
+                p1.getWinCount(),
+                p1.getScore());
 
-        System.out.printf("%-15s | %-6d | %-7d | %-6d %n",
-                playerTwo.getName(),
-                playerTwo.getWinCount(),
-                playerTwo.getLoseCount(),
-                playerTwo.getPoints());
+        System.out.printf("%-15s | %-6d | %-6d %n",
+                p2.getName(),
+                p2.getWinCount(),
+                p2.getScore());
 
         System.out.println("=====================================\n");
     }
 
-
-    /**
-     * Method that reset game
-     * @param isTwoPlayer, checks if reset game is single/multiplayer
-     */
-    public void resetGame(boolean isTwoPlayer) {
-
-        boolean playAgain = InputHandler.getYesOrNo("Do you want to play again?");
-
-        if (playAgain && !isTwoPlayer) {
-            singlePlayer();
-        } else if (playAgain) {
-            twoPlayerInit();
+    public boolean playAgain() {
+        if (!InputHandler.getYesOrNo("Continue playing?")) {
+            return false;
         } else {
-            System.out.println("Thanks for playing!");
-            System.exit(0);
+            String setting = singlePlayer ? "single player" : "2 players)";
+            newGame = !InputHandler.getYesOrNo("Continue with the same settings (" + setting + ")?");
+            return true;
         }
+    }
 
+    public void setSinglePlayer(boolean singlePlayer) {
+        this.singlePlayer = singlePlayer;
     }
 }
