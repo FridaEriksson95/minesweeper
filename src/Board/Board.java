@@ -140,6 +140,7 @@ public class Board {
 
     /**
      * Checks if a position exists on the board.
+     *
      * @param x x-coordinate
      * @param y y-coordinate
      * @return Returns true if position is within bounds.
@@ -149,19 +150,18 @@ public class Board {
     }
 
     public void openCellNearBy(int x, int y) {
-        Random random = new Random();
-        int limitCellsToOpen = random.nextInt(5);
-        if (withinBoundsOfGrid(x, y) && !minesweeper[x][y].isOpen() && !minesweeper[x][y].isBomb()) {
-            minesweeper[x][y].setOpen(true);
-            limitCellsToOpen--;
-            if (minesweeper[x][y].getNumber() == 0 && limitCellsToOpen > 0) {
-                ArrayList<OffsetCoordinate> surroundingOffsets = OffsetCoordinate.getSurroundingCellsOffsets();
+        ArrayList<OffsetCoordinate> surroundingOffsets = OffsetCoordinate.getSurroundingCellsOffsets();
+        if (withinBoundsOfGrid(x, y)) {
+            Cell cell = minesweeper[x][y];
+            if (!cell.isBomb() && !cell.isOpen()) {
+                cell.setOpen(true);
+            }
+            if (cell.getNumber() == 0) {
                 for (OffsetCoordinate offset : surroundingOffsets) {
-                    int surroundingRow = offset.xOffset;
-                    int surroundingColumn = offset.yOffset;
-                    if (limitCellsToOpen > 0 && withinBoundsOfGrid(surroundingRow, surroundingColumn) && !minesweeper[surroundingRow][surroundingColumn].isOpen()) {
+                    int surroundingRow = x + offset.xOffset();
+                    int surroundingColumn = y + offset.yOffset();
+                    if (withinBoundsOfGrid(surroundingRow, surroundingColumn) && !minesweeper[surroundingRow][surroundingColumn].isOpen()) {
                         openCellNearBy(surroundingRow, surroundingColumn);
-                        limitCellsToOpen--;
                     }
                 }
             }
