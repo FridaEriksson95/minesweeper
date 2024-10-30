@@ -2,9 +2,19 @@ package Utilities;
 
 import java.util.Scanner;
 
+/**
+ * Class that handles general inputs for game
+ */
+
 public class InputHandler {
 
     private static Scanner scanner = new Scanner(System.in);
+
+    /**
+     * Method to handle int range input
+     *
+     * @return a int, min max
+     */
 
     public static int getNewIntInRange(int min, int max, String sub) {
         while(true){
@@ -22,6 +32,11 @@ public class InputHandler {
             System.out.println("Number input out of range, choose a " + sub + " between " + min + " and " + max +":+++");
         }
     }
+    /**
+     * Method to handle yes/no input
+     *
+     * @return a boolean
+     */
 
     public static boolean getYesOrNo(String question) {
         while(true){
@@ -37,6 +52,11 @@ public class InputHandler {
             }
         }
     }
+    /**
+     * Method to handle input
+     *
+     * @return a input String
+     */
 
     public static String getNewString() {
         return scanner.nextLine();

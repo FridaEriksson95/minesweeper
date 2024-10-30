@@ -125,6 +125,12 @@ public class Board {
         }
     }
 
+    /**
+     * Method to check if there is a win
+     *
+     * @return a boolean false/true if game is lost/won
+     */
+
     public boolean checkWin() {
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
