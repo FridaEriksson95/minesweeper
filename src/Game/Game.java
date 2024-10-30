@@ -153,6 +153,7 @@ public class Game {
         System.out.println("Player: 2 enter name ");
         String playerTwoName = getNextString();
         playerTwo.setName(playerTwoName);
+        System.out.println(playerOneName + " and " + playerTwoName + ", let's go!");
         startGameTp();
     }
 
