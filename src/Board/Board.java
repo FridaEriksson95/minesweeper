@@ -5,6 +5,11 @@ import Utilities.Colors;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Class Board
+ * Board logic/functionality
+ */
+
 public class Board {
     private int size, amountBombs;
     private Cell[][] minesweeper;
@@ -39,6 +44,10 @@ public class Board {
         }
     }
 
+    /**
+     * Method to print board
+     */
+
     public void printBoard(boolean isTwoPlayer) {
         System.out.print("    ");
         for (int i = 1; i <= minesweeper.length; i++) {
@@ -51,9 +60,6 @@ public class Board {
             } else {
                 System.out.print(i + 1 + "");
             }
-            //TODO vid två spelare och man öppnar en cell så placeras både en blå och en lila 0 ut, fast bara en spelare kört
-            // och öppnar nästa en cell som öppnats av celler nearby så blir alla öppnade celler gröna
-            //ska man kunna köra på en flagga? allt blir grönt efter man flaggat
             for (int j = 0; j < minesweeper.length; j++) {
                 Cell cell = minesweeper[i][j];
                 if (cell.isOpen()) {
@@ -84,6 +90,11 @@ public class Board {
             System.out.println();
         }
     }
+
+    /**
+     * Method to generate board
+     * Calls 2 other methods.
+     */
 
     private void generateBoard() {
         this.minesweeper = new Cell[size][size];
@@ -135,6 +146,12 @@ public class Board {
             }
         }
     }
+
+    /**
+     * Method to check if there is a win or not
+     * checks if all board cells are open
+     * @return a boolean (true/false)
+     */
 
     public boolean checkWin() {
         for (int i = 0; i < size; i++) {

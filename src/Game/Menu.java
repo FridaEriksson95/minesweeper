@@ -39,7 +39,10 @@ public class Menu {
         }
     }
 
-    //TODO uppdatera instructions med två spelare - how to play
+
+    /**
+     * Method for instructions
+     */
     public void instructions() {
         System.out.println();
         System.out.println(Colors.ANSI_BLUE + "Game instructions:" + Colors.ANSI_RESET);
