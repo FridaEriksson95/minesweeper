@@ -15,8 +15,16 @@ public class Board {
         generateBoard();
     }
 
+    /**
+     * Helper class to store a pair of offset ints, to be used to get a coordinate relative to origin coordinate.
+     *
+     * @param xOffset
+     * @param yOffset
+     */
     private record OffsetCoordinate(int xOffset, int yOffset) {
-
+        /**
+         * @return Returns a list of OffsetCoordinate for all adjacent coordinates.
+         */
         private static ArrayList<OffsetCoordinate> getSurroundingCellsOffsets() {
             ArrayList<OffsetCoordinate> offsets = new ArrayList<>();
             offsets.add(new OffsetCoordinate(1, 0)); //Right
@@ -109,6 +117,9 @@ public class Board {
         }
     }
 
+    /**
+     * Loops through all Cells on the board and counts the number of adjacent mines of each Cell. Stores the number in each Cell.
+     */
     private void generateNumbers() {
         ArrayList<OffsetCoordinate> surroundingOffsets = OffsetCoordinate.getSurroundingCellsOffsets();
         for (int column = 0; column < size; column++) {
@@ -149,6 +160,12 @@ public class Board {
         return (x >= 0 && x < size) && (y >= 0 && y < size);
     }
 
+    /**
+     * Opens up all adjacent Cells that are not bombs at a given coordinate on the board. Runs itself again on adjacent Cell
+     * if the Cell's number is 0. To be used on each move.
+     * @param x origin x-coordinate
+     * @param y origin y-coordinate
+     */
     public void openCellNearBy(int x, int y) {
         ArrayList<OffsetCoordinate> surroundingOffsets = OffsetCoordinate.getSurroundingCellsOffsets();
         if (withinBoundsOfGrid(x, y)) {
