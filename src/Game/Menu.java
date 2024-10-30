@@ -39,13 +39,20 @@ public class Menu {
         }
     }
 
-
     /**
      * Method for instructions
      */
     public void instructions() {
         System.out.println();
-        System.out.println(Colors.ANSI_BLUE + "Game instructions:" + Colors.ANSI_RESET);
+        System.out.println(Colors.ANSI_BLUE + "Game instructions for 1 player:" + Colors.ANSI_RESET);
+        System.out.println(Colors.ANSI_YELLOW + "The goal of the game is to open all of the cells without hitting a bomb.");
+        System.out.println("You, the player, will pick a row and column to open a cell.");
+        System.out.println("If you hit a bomb, the game ends, and you lose.");
+        System.out.println("If you successfully open all cells without hitting a bomb, you win!");
+        System.out.println("Each opened cell will show the number of bombs in the surrounding cells, helping you avoid bombs." + Colors.ANSI_RESET);
+
+        System.out.println();
+        System.out.println(Colors.ANSI_BLUE + "Game instructions for 2 players:" + Colors.ANSI_RESET);
         System.out.println(Colors.ANSI_YELLOW + "The goal of the game is to open all of the cells without hitting a bomb.");
         System.out.println("Two players take turns picking a row and column to open a cell.");
         System.out.println("If a player hits a bomb, they lose, and the other player wins.");
