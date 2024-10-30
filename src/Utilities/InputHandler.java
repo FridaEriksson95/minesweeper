@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class InputHandler {
 
-    private static Scanner scanner = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
 
     public static int getNewIntInRange(int min, int max, String sub) {
         while(true){

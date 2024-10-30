@@ -4,33 +4,34 @@ import Board.Board;
 import Board.Cell;
 import Utilities.InputHandler;
 
-import java.util.Scanner;
 
 public class Game {
     private final Board board;
-//    private final Scanner scanner;
     private final Player playerOne, playerTwo;
     private Player currentPlayer;
 
     public Game() {
         this.board = new Board();
-//        this.scanner = new Scanner(System.in);
         this.playerOne = new Player("Player 1");
         this.playerTwo = new Player("Player 2");
     }
 
+    /**
+     * Starts a single player game.
+     */
     public void singlePlayer() {
         setupBoard();
         playGame();
     }
 
+    /**
+     * Asks the player to choose board size and amount of mines.
+     */
     private void setupBoard() {
-
         System.out.println("Choose a board size (3-20): ");
-        int size = InputHandler.getNewIntInRange(3,20,"board size");
-
+        int size = InputHandler.getNewIntInRange(3, 20, "board size");
         System.out.println("Choose amount of mines (1-" + (size * size - 1) + "): ");
-        int mines = InputHandler.getNewIntInRange(1, size * size -1, "mine amount");
+        int mines = InputHandler.getNewIntInRange(1, size * size - 1, "mine amount");
         board.setBoard(size, mines);
     }
 
@@ -53,11 +54,12 @@ public class Game {
     }
 
     /**
-     * Asks the user to enter an x- and y-position.
-     *
-     * @return Returns true when move is made and false if a bomb is hit.
+     * Asks the player to enter a position on the board to try to open up.
+     * @param playerNumber 0 = singlePlayer,
+     *                     1 = player1 in multiplayer,
+     *                     2 = player2 in multiplayer
+     * @return Returns true as long as the cell opened is not a bomb.
      */
-
     public boolean playerMove(int playerNumber) {
         Cell cell;
         while (true) {
@@ -160,7 +162,7 @@ public class Game {
                 resetGame(true);
                 break;
             }
-            currentPlayer.setPoints(currentPlayer.getPoints()+1);
+            currentPlayer.setPoints(currentPlayer.getPoints() + 1);
             currentPlayer = (currentPlayer == playerOne) ? playerTwo : playerOne;
         }
     }
@@ -187,16 +189,16 @@ public class Game {
 
     public void resetGame(boolean isTwoPlayer) {
 
-    boolean playAgain = InputHandler.getYesOrNo("Do you want to play again?");
+        boolean playAgain = InputHandler.getYesOrNo("Do you want to play again?");
 
-    if (playAgain && !isTwoPlayer) {
-        singlePlayer();
-    } else if (playAgain) {
-        twoPlayerInit();
-    } else {
-        System.out.println("Thanks for playing!");
-        System.exit(0);
-    }
+        if (playAgain && !isTwoPlayer) {
+            singlePlayer();
+        } else if (playAgain) {
+            twoPlayerInit();
+        } else {
+            System.out.println("Thanks for playing!");
+            System.exit(0);
+        }
 
     }
 }
